@@ -23,13 +23,17 @@ ul{
   margin-right:340px;
 /*  border:5px solid red;*/
   height:100%;
+  overflow-y:scroll;
+  overflow-x:hidden;
 }
 .right-sidebar{
-  border:5px solid blue;
-  position:absolute;
+/*  border:5px solid blue;*/
+  position:fixed;
+  background-color:#cccccc;
   right:0;
   top:0;
   width:340px;
+  height:100%;
 }
 .group:after{
   content:"";
@@ -42,9 +46,35 @@ ul{
 .page-show-header{
   margin:20px;
 }
+.page-show-header img{
+  border:5px solid black;
+}
 .page-show-title{
   padding:20px;
   width:400px;
   margin:auto;
-  font-size:40px;
+  font-size:44px;
+}
+.container{
+  border: 5px solid orange;
+  float:left;
+  font-size:20px;
+  width:400px;
+  margin:20px;
+  padding:20px;
+}
+.container img{
+  max-width:400px;
+  height:auto;
+}
+.comment-area{
+  border:5px solid red;
+  padding:5px;
+}
+.comment-body{
+  padding:10px;
+  padding-left:50px;
+}
+.comment-area img{
+  float:left;
 }
