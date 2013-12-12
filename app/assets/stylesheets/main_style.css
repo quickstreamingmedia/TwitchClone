@@ -1,4 +1,4 @@
-html,head, body, div{
+html,head, body, div, a{
   padding:0;
   margin:0;
   border:0;
@@ -6,6 +6,20 @@ html,head, body, div{
 }
 ul{
   list-style-type:none;
+}
+a:link {
+  text-decoration:none;
+  color:inherit;
+}
+a:visited {
+  text-decoration:none;
+  color:inherit;
+}
+a:hover {
+  text-decoration:underline;
+}
+a:active {
+  text-decoration:underline;
 }
 .left-sidebar{
   /*border:5px solid green;*/
@@ -76,5 +90,16 @@ ul{
   padding-left:50px;
 }
 .comment-area img{
+  float:left;
+}
+.follow-area{
+  border:5px solid red;
+  padding:5px;
+}
+.follow-name{
+  padding:10px;
+  padding-left:50px;
+}
+.follow-area img{
   float:left;
 }

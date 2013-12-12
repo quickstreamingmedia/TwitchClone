@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131211194353) do
+ActiveRecord::Schema.define(:version => 20131212215748) do
 
   create_table "comments", :force => true do |t|
     t.integer  "parent_id"
@@ -48,6 +48,14 @@ ActiveRecord::Schema.define(:version => 20131211194353) do
 
   add_index "follows", ["followee_id"], :name => "index_follows_on_followee_id"
   add_index "follows", ["follower_id"], :name => "index_follows_on_follower_id"
+
+  create_table "games", :force => true do |t|
+    t.string   "title"
+    t.string   "icon_url"
+    t.string   "wallpaper_url"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "pages", :force => true do |t|
     t.integer  "user_id"
