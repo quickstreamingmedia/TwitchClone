@@ -23,4 +23,8 @@ class Page < ActiveRecord::Base
   foreign_key: :page_id,
   primary_key: :id
   )
+
+  def logo
+    (!!self.logo_url && self.logo_url != "") ? self.logo_url : "http://upload.wikimedia.org/wikipedia/commons/a/a4/Socrates_Louvre.jpg"
+  end
 end

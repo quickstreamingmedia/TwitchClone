@@ -50,6 +50,13 @@ class User < ActiveRecord::Base
   primary_key: :id
   )
 
+  has_many(
+  :videos,
+  class_name: "Video",
+  foreign_key: :user_id,
+  primary_key: :id
+  )
+
   def self.find_by_credentials(username, password)
     user = User.find_by_username(username)
     return user if !!user && user.has_password?(password)

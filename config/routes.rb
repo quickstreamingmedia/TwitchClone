@@ -3,6 +3,10 @@ TwitchClone::Application.routes.draw do
   resources :users, only: [:new, :create, :update]
   resources :pages, only: [:update]
   resources :follows, only: [:create, :destroy, :update]
+  resources :videos, except: [:index, :new] do
+    resources :comments, only: [:create]
+  end
+
 
   resource :session, only: [:new, :create, :destroy]
 

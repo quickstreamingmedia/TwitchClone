@@ -1,0 +1,6 @@
+<form action="<%= video_comments_url(@video.id) %>" method="POST">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="hidden" name="comment[parent_id]" value="<%= parent_id %>">
+  Body:<br><textarea name="comment[body]"></textarea>
+  <input type="submit" value="Post <%= button_text %>">
+</form>

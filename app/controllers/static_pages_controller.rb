@@ -18,7 +18,7 @@ class StaticPagesController < ApplicationController
           client_id: "",
           client_secret: "",
           grant_type: "authorization_code",
-          redirect_uri: "http://localhost:3000/",
+          redirect_uri: root_url,
           code: params[:code]
           }
         )
@@ -29,8 +29,8 @@ class StaticPagesController < ApplicationController
       else
         #this has the scope!
         scope = "user_read"
-        client_id = fail #change this after interpolating this into the string below
-        url = "https://api.twitch.tv/kraken/oauth2/authorize?response_type=code&client_id=#{}&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&scope=#{scope}"
+        #client_id = ??? #change this after interpolating this into the string below
+        url = "https://api.twitch.tv/kraken/oauth2/authorize?response_type=code&client_id=#{fail}&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&scope=#{scope}"
         redirect_to url
       end
     end

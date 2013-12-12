@@ -1,0 +1,20 @@
+<style>
+.current-video{
+  background-color:#ffff00;
+}
+</style>
+
+<h1><%= @video.title %></h1>
+NO CODE FOR EMBEDDED PLAYER YET
+<hr>
+<%= render 'partials/new_comment', parent_id: nil, button_text: "Comment" %>
+<%= render '/partials/comments', key: nil %>
+<hr>
+<% @videos.each do |video| %>
+  <div class="<%= (video.id == @video.id) ? "current-video" : "" %>">
+    <h2><%= video.title %></h2>
+    <%= "<a href=#{video_url(video.id)} ><img src=#{h(video.thumbnail_url)} height=63 width=112></a>".html_safe %>
+    <%= video.description %>
+  </div>
+<% end %>
+

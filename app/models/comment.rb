@@ -1,5 +1,6 @@
 class Comment < ActiveRecord::Base
   attr_accessible :parent_id, :body, :video_id, :user_id
+  validates :user_id, :video_id, presence: true
 
   belongs_to(
   :user,
@@ -25,5 +26,7 @@ class Comment < ActiveRecord::Base
   foreign_key: :parent_id,
   primary_key: :id
   )
+
+
 
 end

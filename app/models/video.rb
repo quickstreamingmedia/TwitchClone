@@ -1,5 +1,6 @@
 class Video < ActiveRecord::Base
   attr_accessible :user_id, :thumbnail_url, :title, :description, :video_url, :game_title
+  validates :user_id, presence: true
 
   has_many(
   :favoritings,
@@ -16,4 +17,21 @@ class Video < ActiveRecord::Base
   foreign_key: :video_id,
   primary_key: :id
   )
+
+  belongs_to(
+  :user,
+  class_name: "User",
+  foreign_key: :user_id,
+  primary_key: :id
+  )
+
+  def comments_by_parent_id
+    comment_hash = {}
+    self.comments.each do |comment|
+      comment_hash[comment.id] = comment.replies unless comment.replies.empty?
+    end
+    comment_hash[nil] = comments.where("parent_id IS NULL")
+    comment_hash
+  end
+
 end

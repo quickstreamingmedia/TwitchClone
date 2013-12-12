@@ -1,0 +1,50 @@
+html,head, body, div{
+  padding:0;
+  margin:0;
+  border:0;
+  font-family:sans-serif;
+}
+ul{
+  list-style-type:none;
+}
+.left-sidebar{
+  /*border:5px solid green;*/
+
+  background-color:#444444;
+  color:white;
+  position:fixed;
+  width:240px;
+  height:100%;
+}
+.main-content{
+  position:relative;
+  padding:10px;
+  margin-left: 240px;
+  margin-right:340px;
+/*  border:5px solid red;*/
+  height:100%;
+}
+.right-sidebar{
+  border:5px solid blue;
+  position:absolute;
+  right:0;
+  top:0;
+  width:340px;
+}
+.group:after{
+  content:"";
+  display:block;
+  clear:both;
+}
+.user-logo{
+  float:left;
+}
+.page-show-header{
+  margin:20px;
+}
+.page-show-title{
+  padding:20px;
+  width:400px;
+  margin:auto;
+  font-size:40px;
+}
