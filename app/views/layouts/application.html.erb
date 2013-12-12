@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TwitchClone</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class="not-bg">
+  <%= flash[:error] %>
+  <%= current_user.username if !!current_user %>
+  <%= button_to("Log Out!", session_url, method: :delete) if !!current_user %>
+</div>
+
+<%= yield %>
+
+<div class="not-bg">
+  <% if !!current_user %>
+    <h3>Follows</h3>
+    <ul>
+    <% current_user.follows.each do |follow| %>
+      <li><%= h(follow.username) %></li>
+    <% end %>
+    </ul>
+    <h3>Followers</h3>
+    <ul>
+    <% current_user.followers.each do |follower| %>
+      <li><%= h(follower.username) %></li>
+    <% end %>
+    </ul>
+  <% end %>
+</div>
+
+</body>
+</html>

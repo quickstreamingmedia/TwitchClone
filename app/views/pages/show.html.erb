@@ -1,0 +1,39 @@
+<style>
+  div.bg-test{
+    position:fixed;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+    <% if !!@page.background_url && @page.background_url != "" %>
+      background:<%= " url(#{@page.background_url}) no-repeat ".html_safe %>;
+    <% else %>
+      background: #cccccc;
+    <% end %>
+    opacity: 0.5;
+  }
+  div.not-bg{
+    position:relative;
+    z-index:1;
+  }
+</style>
+<div class="bg-test"></div>
+<div class="not-bg">
+  <%= render "partials/follow", {
+    user: @user,
+    follows: @follows,
+  } %>
+  <% imgsrc = (!!@page.logo_url && @page.logo_url != "") ? @page.logo_url : "http://upload.wikimedia.org/wikipedia/commons/a/a4/Socrates_Louvre.jpg" %>
+  <%= "<img src=#{h(imgsrc)} height=100 width=100>".html_safe %>
+  <h2><%= h(@user.username) %>'s Show Page</h2>
+  <% @containers.each do |container| %>
+    <% if !!container.image_url %>
+
+      <% ahref = (container.image_url_link != "" && !!container.image_url_link) ? container.image_url_link : "#" %>
+
+      <%= "<a href=#{h(ahref)} ><img src=#{h(container.image_url)}></a><br>".html_safe %>
+    <% end %>
+    <%= Maruku.new(h(container.body)).to_html.html_safe %><br>
+  <% end %>
+  <%= link_to("Edit", edit_page_url(@user.username)) if @user.username == current_user.username %>
+</div>

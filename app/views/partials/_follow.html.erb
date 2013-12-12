@@ -1,0 +1,9 @@
+<% if !!follows && follows.include?(user) %>
+  <%= button_to("Unfollow", follow_url(user.id), method: :delete) %>
+<% elsif !!current_user && user.username != current_user.username %>
+  <form action="<%= follows_url %>" method="POST">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="follow[followee_id]" value="<%= @user.id %>">
+    <input type="submit" value="Follow!">
+  </form>
+<% end %>

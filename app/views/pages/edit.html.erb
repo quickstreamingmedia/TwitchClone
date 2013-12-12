@@ -1,0 +1,21 @@
+<form action="<%= page_url(@page) %>" method="POST">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="hidden" name="_method" value="PUT">
+  Logo Image Url:<input type="text" name="page[logo_url]" value="<%= @page.logo_url %>"><br>
+  Background Image Url:<input type="text" name="page[background_url]" value="<%= @page.background_url %>"><br>
+  Banner Image Url:<input type="text" name="page[banner_url]" value="<%= @page.banner_url %>"><br>
+
+  <br><br><br>
+
+  <% @containers.each_with_index do |container, i| %>
+    Link to image:<input type="text" name="container[<%= i %>][image_url]" value="<%= container.image_url %>"><br>
+    Image links to:<input type="text" name="container[<%= i %>][image_url_link]" value="<%= container.image_url_link %>"><br>
+    Body: <br><textarea name="container[<%= i %>][body]"><%= container.body %></textarea><br><hr>
+  <% end %>
+
+  Link to image:<input type="text" name="container[new][image_url]"><br>
+  Image links to:<input type="text" name="container[new][image_url_link]"><br>
+  Body: <br><textarea name="container[new][body]"></textarea><br><hr>
+
+  <input type="submit" value="Update Page!">
+</form>

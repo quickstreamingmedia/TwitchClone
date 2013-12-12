@@ -1,0 +1,28 @@
+<% t_user = JSON.parse(RestClient.get("https://api.twitch.tv/kraken/user?oauth_token=#{@access_token}")) %>
+<h1><img src="<%= t_user["logo"] %>" height="50" width="50">Welcome to FunTwitchTimes,
+  <%= t_user["display_name"] %>!
+</h1>
+
+<br><br>
+THE CODE BELOW TOTALLY WORKS BUT IT GOT COMMENTED OUT<br>
+
+needs auth but you can use this (under users api)<br>
+GET https://api.twitch.tv/kraken/streams/followed<br><br>
+
+<!-- <object type="application/x-shockwave-flash"
+        height="450"
+        width="800"
+        id="live_embed_player_flash"
+        data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=<%#= channel %>"
+        bgcolor="#000000">
+  <param  name="allowFullScreen"
+          value="true" />
+  <param  name="allowScriptAccess"
+          value="always" />
+  <param  name="allowNetworking"
+          value="all" />
+  <param  name="movie"
+          value="http://www.twitch.tv/widgets/live_embed_player.swf" />
+  <param  name="flashvars"
+          value="hostname=www.twitch.tv&channel=<%#= channel %>&auto_play=true&start_volume=0" />
+</object> -->

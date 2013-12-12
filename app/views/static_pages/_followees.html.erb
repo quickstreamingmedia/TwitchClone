@@ -1,0 +1,7 @@
+<% follows = JSON.parse(RestClient.get("https://api.twitch.tv/kraken/users/#{fail}/follows/channels"))["follows"] %>
+<% follows.each do |fol| %>
+<%= fol["channel"]["name"] %><br>
+<% end %>
+<%#= follows.sample %>
+<% channel = follows.sample["channel"]["name"] %>
+<%= JSON.parse(RestClient.get("https://api.twitch.tv/kraken/streams/followed?oauth_token=#{@access_token}")) %>
