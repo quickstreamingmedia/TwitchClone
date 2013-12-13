@@ -6,7 +6,7 @@
     height:100%;
     width:100%;
     <% if !!@page.background_url && @page.background_url != "" %>
-      background:<%= " url(#{@page.background_url}) no-repeat ".html_safe %>;
+      background:<%= " url('#{@page.background_url}') no-repeat ".html_safe %>;
     <% else %>
       background: #cccccc;
     <% end %>
