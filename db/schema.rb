@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131212215748) do
+ActiveRecord::Schema.define(:version => 20131213153437) do
 
   create_table "comments", :force => true do |t|
     t.integer  "parent_id"
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(:version => 20131212215748) do
     t.string   "game_title"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.string   "cid"
   end
 
   add_index "videos", ["user_id"], :name => "index_videos_on_user_id"

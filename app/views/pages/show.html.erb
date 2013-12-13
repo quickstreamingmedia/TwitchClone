@@ -25,6 +25,7 @@
     <%= "<img src=#{h(imgsrc)} height=80 width=80 class='user-logo'>".html_safe %>
     <h2 class="page-show-title"><%= h(@user.username) %>'s Show Page</h2>
   </header>
+  <%= render "partials/embed_live" %>
   <%= render "partials/follow", {
     user: @user,
     follows: @follows,

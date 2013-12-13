@@ -1,5 +1,5 @@
 class Video < ActiveRecord::Base
-  attr_accessible :user_id, :thumbnail_url, :title, :description, :video_url, :game_title
+  attr_accessible :user_id, :thumbnail_url, :title, :description, :video_url, :game_title, :cid
   validates :user_id, presence: true
 
   has_many(

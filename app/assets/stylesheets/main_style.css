@@ -65,7 +65,7 @@ a:active {
 }
 .page-show-title{
   padding:20px;
-  width:400px;
+  width:800px;
   margin:auto;
   font-size:44px;
 }
@@ -102,4 +102,9 @@ a:active {
 }
 .follow-area img{
   float:left;
+}
+.embed_live{
+  border: 10px solid pink;
+  display:block;
+  margin:auto;
 }

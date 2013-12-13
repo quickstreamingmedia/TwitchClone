@@ -12,14 +12,14 @@ class SessionsController < ApplicationController
       redirect_to root_url
     else
       flash[:error] = "Invalid credentials"
-      redirect_to new_session_url
+      redirect_to root_url
     end
   end
 
   def destroy
     Session.find_by_session_token(session[:session_token]).destroy
     session[:session_token] = nil
-    redirect_to new_session_url
+    redirect_to root_url
   end
 
   def not_logged_in?

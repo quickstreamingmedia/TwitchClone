@@ -5,7 +5,25 @@
 </style>
 
 <h1><%= @video.title %></h1>
-NO CODE FOR EMBEDDED PLAYER YET
+<object bgcolor='#000000'
+        data='http://www.twitch.tv/widgets/archive_embed_player.swf'
+        height='450'
+        id='clip_embed_player_flash'
+        type='application/x-shockwave-flash'
+        width='900'>
+  <param  name='movie'
+          value='http://www.twitch.tv/widgets/archive_embed_player.swf' />
+  <param  name='allowScriptAccess'
+          value='always' />
+  <param  name='allowNetworking'
+          value='all' />
+  <param  name='allowFullScreen'
+          value='true' />
+  <param  name='flashvars'
+          value='channel=<%= @user.username %>&start_volume=25&auto_play=false&chapter_id=3339981<%#= @video.id %>' />
+</object>
+<hr>
+<%= @test %>
 <hr>
 <%= render 'partials/new_comment', parent_id: nil, button_text: "Comment" %>
 <%= render '/partials/comments', key: nil %>
