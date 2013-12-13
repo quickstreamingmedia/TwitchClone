@@ -23,14 +23,19 @@
   <header class="page-show-header group">
     <% imgsrc = @page.logo %>
     <%= "<img src=#{h(imgsrc)} height=80 width=80 class='user-logo'>".html_safe %>
-    <h2 class="page-show-title"><%= h(@user.username) %>'s Show Page</h2>
+    <% if !!@page.stream_title && @page.stream_title != "" %>
+      <h2 class="page-show-title"><%= h(@page.stream_title) %></h2>
+    <% else %>
+      <h2 class="page-show-title"><%= h(@user.username) %>'s Show Page</h2>
+    <% end %>
   </header>
   <%= render "partials/embed_live" %>
   <%= render "partials/follow", {
     user: @user,
     follows: @follows,
   } %>
-<section class="group">
+  <%= render "partials/tweet" %>
+<section class="group container-section">
   <% @containers.each do |container| %>
   <div class="container">
     <% if !!container.image_url %>

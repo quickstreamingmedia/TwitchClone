@@ -20,10 +20,10 @@
   <param  name='allowFullScreen'
           value='true' />
   <param  name='flashvars'
-          value='channel=<%= @user.username %>&start_volume=25&auto_play=false&chapter_id=3339981<%#= @video.id %>' />
+          value='channel=<%= @user.username %>&start_volume=25&auto_play=false&chapter_id=<%= @video.cid[1...@video.cid.length] %>' />
 </object>
 <hr>
-<%= @test %>
+<%#= @test %>
 <hr>
 <%= render 'partials/new_comment', parent_id: nil, button_text: "Comment" %>
 <%= render '/partials/comments', key: nil %>

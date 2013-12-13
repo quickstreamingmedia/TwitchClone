@@ -12,6 +12,7 @@ gem 'addressable'
 gem 'rest-client'
 gem 'maruku'
 gem 'figaro'
+gem 'pg_search'
 
 gem 'bcrypt-ruby', require: 'bcrypt'
 

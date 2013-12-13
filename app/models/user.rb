@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   attr_accessible :username, :password, :email, :short_bio, :long_bio, :show_status, :status
   attr_reader :password
   attr_accessor :is_admin
-  validates :username, uniqueness: true
+  validates_uniqueness_of :username, case_sensitive: false
   validates :username, presence: true
   validates :email, presence: true
   validates :password, length: {minimum: 6, allow_nil: true}

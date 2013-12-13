@@ -1,0 +1,9 @@
+<% url = "https://twitter.com/intent/tweet" %>
+<% params = ["original_referer=#{CGI::escape(page_show_url(@user.username))}"] %>
+<% params << "text=#{CGI::escape(@page.stream_title)}" %>
+<% params << "tw_p=tweetbutton" %>
+<% params << "url=#{CGI::escape(page_show_url(@user.username))}" %>
+<% params = params.join("&") %>
+<% url = url << "?" << params %>
+
+<a href="<%= url.html_safe %>" target="_blank">Share!</a>
