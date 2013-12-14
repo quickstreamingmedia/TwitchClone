@@ -9,13 +9,6 @@ class ApplicationController < ActionController::Base
     if !!current_user
       @user_follows = current_user.follows
       user_names = @user_follows.map{ |x| x.username.downcase }
-      # @streams_info = []
- #      user_names.each do |u_name|
- #        begin
- #          @streams_info << JSON.parse(RestClient.get("https://api.twitch.tv/kraken/streams/#{u_name}"))["stream"]
- #        rescue
- #        end
- #      end
       @streams_info = JSON.parse(RestClient.get("https://api.twitch.tv/kraken/streams?channel=#{user_names.join('%2C')}"))["streams"]
 
       @streams_info.each do |stream|
@@ -24,6 +17,9 @@ class ApplicationController < ActionController::Base
           live_user = @user_follows.find{ |x| x.username.downcase == stream["channel"]["display_name"].downcase }
           if !!live_user && live_user.status != "(LIVE)"
             live_user.update_attribute(:status, "(LIVE)")
+          end
+          if live_user.status == "(LIVE)"
+            Page.find_by_user_id(live_user.id).update_attribute(:stream_title, stream["channel"]["status"])
           end
         end
       end

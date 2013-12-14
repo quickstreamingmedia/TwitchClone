@@ -13,6 +13,7 @@ gem 'rest-client'
 gem 'maruku'
 gem 'figaro'
 gem 'pg_search'
+gem 'backbone-on-rails'
 
 gem 'bcrypt-ruby', require: 'bcrypt'
 

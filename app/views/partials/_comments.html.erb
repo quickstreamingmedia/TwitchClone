@@ -4,7 +4,14 @@
     <li>
       <div class="comment-area">
       <%= "<img style='border:3px solid black;' src=#{Page.find_by_user_id(user.id).logo} height=30 width=30>".html_safe %>
-      <div class="comment-body"><%= "<b>#{user.username}:</b> #{h(comment.body)}".html_safe %></div>
+        <div class="comment-body"><%= "<b>#{user.username}:</b> #{h(comment.body)}".html_safe %>
+          <% if comment.body != "[deleted]" && !!current_user && user.username == current_user.username %>
+            <%= link_to("(delete)", video_comment_url(comment.video_id,comment.id), method: :put) %>
+          <% end %>
+          <% if comment.body != "[deleted]" && !!current_user && @user.username == current_user.username %>
+            <%= link_to("(delete)", video_comment_url(comment.video_id,comment.id), method: :put) %>
+          <% end %>
+        </div>
       </div>
     </li>
     <%= render 'partials/new_comment', parent_id: comment.id, button_text: "Reply"  %>

@@ -12,4 +12,14 @@ class CommentsController < ApplicationController
     end
   end
 
+  def update
+    comment = Comment.find(params[:id])
+    if !!params[:comment]
+
+    else
+      comment.update_attribute(:body, "[deleted]")
+      redirect_to video_url(comment.video_id)
+    end
+  end
+
 end

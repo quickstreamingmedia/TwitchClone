@@ -4,7 +4,7 @@ TwitchClone::Application.routes.draw do
   resources :pages, only: [:update]
   resources :follows, only: [:create, :destroy, :update]
   resources :videos, except: [:index, :new] do
-    resources :comments, only: [:create]
+    resources :comments, only: [:create, :update]
   end
 
 
