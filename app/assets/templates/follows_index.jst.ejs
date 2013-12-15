@@ -1,0 +1,9 @@
+<ul>
+  <% follows.each(function(follow){ %>
+    <div class="follow-area">
+      <li>
+        <%= follow.escape("username") + " " + follow.escape("status") %>
+      </li>
+    </div>
+  <% }) %>
+</ul>

@@ -14,6 +14,7 @@ gem 'maruku'
 gem 'figaro'
 gem 'pg_search'
 gem 'backbone-on-rails'
+gem 'ejs'
 
 gem 'bcrypt-ruby', require: 'bcrypt'
 

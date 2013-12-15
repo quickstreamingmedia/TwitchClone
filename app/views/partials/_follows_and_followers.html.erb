@@ -1,0 +1,25 @@
+<ul>
+<% @user_follows.each do |follow| %>
+  <div class="follow-area">
+    <a href="<%= page_show_url(follow.username) %>">
+      <%= "<img style='border:3px solid black;' src=#{Page.find_by_user_id(follow.id).logo} height=30 width=30>".html_safe %>
+      <div class="follow-name">
+      <li title="<%= h(follow.short_bio) %>"><%= h(follow.username << " " << follow.status.to_s) %></li>
+      </div>
+    </a>
+  </div>
+<% end %>
+</ul>
+<h3>Followers</h3>
+<ul>
+<% @user_followers.each do |follower| %>
+  <div class="follow-area">
+    <a href="<%= page_show_url(follower.username) %>">
+      <%= "<img style='border:3px solid black;' src=#{Page.find_by_user_id(follower.id).logo} height=30 width=30>".html_safe %>
+      <div class="follow-name">
+        <li title="<%= h(follower.short_bio) %>"><%= h(follower.username << " " << follower.status.to_s) %></li>
+      </div>
+    </a>
+  </div>
+<% end %>
+</ul>

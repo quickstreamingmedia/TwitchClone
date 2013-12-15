@@ -5,6 +5,10 @@ class UsersController < ApplicationController
     render :new
   end
 
+  def follows
+    render :json => @user_follows
+  end
+
   def create
     @user = User.new(params[:user])
     if @user.save

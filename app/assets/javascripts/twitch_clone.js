@@ -4,7 +4,24 @@ window.TwitchClone = {
   Views: {},
   Routers: {},
   initialize: function() {
-    alert('Hello from Backbone!');
+    var data = JSON.parse($("#bootstrapped_current_user_json").html());
+    CURRENT_USER_ID = data["CURRENT_USER_ID"];
+    if (CURRENT_USER_ID){
+      TwitchClone.Collections.follows = new TwitchClone.Collections.Follows(data["FOLLOWS"])
+      TwitchClone.Views.followsIndex = new TwitchClone.Views.FollowsIndex({
+        "collection": TwitchClone.Collections.follows,
+        "$el": $(".follows-area")
+      });
+      $(".follows-area").html(TwitchClone.Views.followsIndex.render().$el);
+      var self = this;
+      //UNCOMMENT THE LINE BELOW FOR A CONTINUOUS FOLLOWER CHECK
+      //window.setInterval(self.refetch.bind(self), 45000);
+    }
+    //alert('Hello from Backbone!');
+  },
+  refetch: function(){
+    TwitchClone.Collections.follows = new TwitchClone.Collections.Follows({id: CURRENT_USER_ID});
+    TwitchClone.Collections.follows.fetch();
   }
 };
 

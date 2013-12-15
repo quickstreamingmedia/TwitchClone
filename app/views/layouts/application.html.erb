@@ -7,38 +7,20 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <script type="application/json" id="bootstrapped_current_user_json">
+    {
+      "CURRENT_USER_ID": <%= (!!current_user) ? current_user.id.to_json.html_safe : 0 %>,
+      "FOLLOWS": <%= (!!current_user) ? current_user.follows.to_json.html_safe : [].to_json.html_safe %>
+    }
+  </script>
   <div class="left-sidebar">
-    <%= flash[:error] %>
     <%= current_user.username if !!current_user %>
     <%= button_to("Log Out!", session_url, method: :delete) if !!current_user %>
 
     <% if !!current_user %>
       <h3>Follows</h3>
-      <ul>
-      <% @user_follows.each do |follow| %>
-        <div class="follow-area">
-          <a href="<%= page_show_url(follow.username) %>">
-            <%= "<img style='border:3px solid black;' src=#{Page.find_by_user_id(follow.id).logo} height=30 width=30>".html_safe %>
-            <div class="follow-name">
-            <li title="<%= h(follow.short_bio) %>"><%= h(follow.username << " " << follow.status.to_s) %></li>
-            </div>
-          </a>
-        </div>
-      <% end %>
-      </ul>
-      <h3>Followers</h3>
-      <ul>
-      <% @user_followers.each do |follower| %>
-        <div class="follow-area">
-          <a href="<%= page_show_url(follower.username) %>">
-            <%= "<img style='border:3px solid black;' src=#{Page.find_by_user_id(follower.id).logo} height=30 width=30>".html_safe %>
-            <div class="follow-name">
-              <li title="<%= h(follower.short_bio) %>"><%= h(follower.username << " " << follower.status.to_s) %></li>
-            </div>
-          </a>
-        </div>
-      <% end %>
-      </ul>
+      <div class="follows-area"></div>
+      <%#= render "partials/follows_and_followers" %>
       <h3>Links</h3>
       <ul>
         <li><a href="<%= user_show_url(current_user.username) %>">My Profile</a></li>
@@ -52,11 +34,11 @@
   </div>
 
   <div class="main-content">
+    <%= flash[:error] || flash[:success] %>
     <%= yield %>
     <%#= @streams_info %>
   </div>
 
   <div class="right-sidebar"></div>
-
 </body>
 </html>

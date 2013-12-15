@@ -1,6 +1,8 @@
 TwitchClone::Application.routes.draw do
 
-  resources :users, only: [:new, :create, :update]
+  resources :users, only: [:new, :create, :update] do
+    get "/follows", to: "users#follows"
+  end
   resources :pages, only: [:update]
   resources :follows, only: [:create, :destroy, :update]
   resources :videos, except: [:index, :new] do
