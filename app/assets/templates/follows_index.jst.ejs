@@ -1,9 +1,16 @@
 <ul>
   <% follows.each(function(follow){ %>
+    <a href="/<%= follow.escape("username") %>">
     <div class="follow-area">
       <li>
-        <%= follow.escape("username") + " " + follow.escape("status") %>
+        <% var imgSrc = "http://upload.wikimedia.org/wikipedia/commons/a/a4/Socrates_Louvre.jpg" %>
+        <% imgSrc = follow.get("page")["logo_url"] ? follow.get("page")["logo_url"] : imgSrc %>
+        <img src="<%= imgSrc %>" height=30 width=30 >
+        <div class="follow-name">
+          <%= follow.escape("username") + " " + follow.escape("status") %>
+        </div>
       </li>
     </div>
+    </a>
   <% }) %>
 </ul>

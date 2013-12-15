@@ -1,0 +1,18 @@
+<% roots = comments.where({parent_id: check_id}) %>
+<ul>
+<% _.each(roots, function(comment){ %>
+  <li>
+    <div class="comment-area">
+      <% var imgSrc = "http://upload.wikimedia.org/wikipedia/commons/a/a4/Socrates_Louvre.jpg" %>
+      <% imgSrc = comment.get("page_logo_url") ? comment.get("page_logo_url") : imgSrc %>
+      <img src="<%= imgSrc %>" height=30 width=30>
+      <div class="comment-body">
+        <b><%= comment.get("username") + ": " %></b><%= comment.escape("body") %>
+      </div>
+    </div>
+  </li>
+  <% if (comments_by_parent_id[comment.id]){ %>
+    <%= JST["comments_index"]({ comments: comments, check_id: comment.id, comments_by_parent_id: comments_by_parent_id }) %>
+  <% } %>
+<% }) %>
+</ul>

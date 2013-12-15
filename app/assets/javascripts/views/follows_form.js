@@ -57,9 +57,6 @@ TwitchClone.Views.FollowsForm = Backbone.View.extend({
       this.$el.addClass("can-unfollow")
     }
 
-    console.log("rendertime")
-    console.log(this.$el)
-
     return this;
   }
 

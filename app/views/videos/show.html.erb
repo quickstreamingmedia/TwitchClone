@@ -5,28 +5,14 @@
 </style>
 
 <h1><%= @video.title %></h1>
-<object bgcolor='#000000'
-        data='http://www.twitch.tv/widgets/archive_embed_player.swf'
-        height='450'
-        id='clip_embed_player_flash'
-        type='application/x-shockwave-flash'
-        width='900'>
-  <param  name='movie'
-          value='http://www.twitch.tv/widgets/archive_embed_player.swf' />
-  <param  name='allowScriptAccess'
-          value='always' />
-  <param  name='allowNetworking'
-          value='all' />
-  <param  name='allowFullScreen'
-          value='true' />
-  <param  name='flashvars'
-          value='channel=<%= @user.username %>&start_volume=25&auto_play=false&chapter_id=<%= @video.cid[1...@video.cid.length] %>' />
-</object>
+THIS IS WHERE THE VIDEO WILL GO AGAIN
+<%#= render 'partials/embed_static' %>
 <hr>
 <%#= @test %>
 <hr>
-<%= render 'partials/new_comment', parent_id: nil, button_text: "Comment" %>
-<%= render '/partials/comments', key: nil %>
+<%#= render 'partials/new_comment', parent_id: nil, button_text: "Comment" %>
+<%#= render '/partials/comments', key: nil %>
+<div class="comments-container"></div>
 <hr>
 <% @videos.each do |video| %>
   <div class="<%= (video.id == @video.id) ? "current-video" : "" %>">
@@ -35,4 +21,30 @@
     <%= video.description %>
   </div>
 <% end %>
-
+<script type="application/json" id="bootstrapped_comments">
+{<% comments = @video.comments %>
+  "COMMENTS": <%= comments.to_json.html_safe %>,
+  "COMMENTS_BY_PARENT_ID": <%= @video.comments_by_parent_id.to_json.html_safe %>,
+  "PAGES": <%= comments.map{ |x| Page.find_by_user_id(x.user_id).logo_url}.to_json.html_safe %>,
+  "USERS": <%= comments.map{ |x| User.find(x.user_id).username }.to_json.html_safe %>
+}
+</script>
+<script>
+$(document).ready(function(){
+  //get some bootstrapped data!!
+  var data = JSON.parse($("#bootstrapped_comments").html());
+  TwitchClone.Collections.comments = new TwitchClone.Collections.Comments(data["COMMENTS"]);
+  TwitchClone.Collections.comments.each(function(comment, index){
+    comment.set({
+      username: data["USERS"][index],
+      page_logo_url: data["PAGES"][index]
+    })
+  });
+  TwitchClone.Views.commentsIndex = new TwitchClone.Views.CommentsIndex({
+    $el: $(".comments-container"),
+    collection: TwitchClone.Collections.comments,
+    comments_by_parent_id: data["COMMENTS_BY_PARENT_ID"]
+  });
+  TwitchClone.Views.commentsIndex.render();
+});
+</script>
