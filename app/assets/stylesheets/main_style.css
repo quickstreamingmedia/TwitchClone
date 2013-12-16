@@ -1,4 +1,4 @@
-html,head, body, div, a{
+html,head, body, div, a, p{
   padding:0;
   margin:0;
   border:0;
@@ -22,7 +22,7 @@ a:active {
 .left-sidebar{
   /*border:5px solid green;*/
 
-  background-color:#444444;
+  background-color:#222222;
   color:white;
   position:fixed;
   width:240px;
@@ -89,15 +89,38 @@ a:active {
   height:auto;
 }
 .comment-area{
+  background:#ccc;
   border:5px solid red;
   padding:5px;
 }
+li.collapsed ul{
+  display:none;
+}
 .comment-body{
-  padding:10px;
+  padding-bottom:5px;
   padding-left:50px;
+}
+.comment-area a{
+  padding-top:10px;
+  padding-right:10px;
+  text-decoration:none;
+  float:left;
+}
+.comment-area p{
+  padding-top:10px;
+  padding-right:10px;
+  text-decoration:none;
+  float:left;
+}
+.comment-area a.reply{
+  float:none;
 }
 .comment-area img{
   float:left;
+  margin-right:10px;
+}
+.replyBox{
+  display:none;
 }
 .follows-area{
   margin:0;
@@ -112,7 +135,7 @@ a:active {
   padding:10px;
 }
 .follow-name{
-  padding:5px;
+  padding:5px 0 5px 5px;
   padding-top:8px;
   padding-left:50px;
 }

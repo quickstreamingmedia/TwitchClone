@@ -12,6 +12,7 @@ THIS IS WHERE THE VIDEO WILL GO AGAIN
 <hr>
 <%#= render 'partials/new_comment', parent_id: nil, button_text: "Comment" %>
 <%#= render '/partials/comments', key: nil %>
+
 <div class="comments-container"></div>
 <hr>
 <% @videos.each do |video| %>
@@ -26,13 +27,15 @@ THIS IS WHERE THE VIDEO WILL GO AGAIN
   "COMMENTS": <%= comments.to_json.html_safe %>,
   "COMMENTS_BY_PARENT_ID": <%= @video.comments_by_parent_id.to_json.html_safe %>,
   "PAGES": <%= comments.map{ |x| Page.find_by_user_id(x.user_id).logo_url}.to_json.html_safe %>,
-  "USERS": <%= comments.map{ |x| User.find(x.user_id).username }.to_json.html_safe %>
+  "USERS": <%= comments.map{ |x| User.find(x.user_id).username }.to_json.html_safe %>,
+  "MODERATORS": <%= User.find(@video.user_id).page.moderators.to_json.html_safe %>
 }
 </script>
 <script>
 $(document).ready(function(){
   //get some bootstrapped data!!
   var data = JSON.parse($("#bootstrapped_comments").html());
+  videoId = <%= @video.id %>
   TwitchClone.Collections.comments = new TwitchClone.Collections.Comments(data["COMMENTS"]);
   TwitchClone.Collections.comments.each(function(comment, index){
     comment.set({

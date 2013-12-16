@@ -24,6 +24,15 @@ class Page < ActiveRecord::Base
   primary_key: :id
   )
 
+  has_many(
+  :moderator_objects,
+  class_name: "Moderator",
+  foreign_key: :page_id,
+  primary_key: :id
+  )
+
+  has_many :moderators, through: :moderator_objects, source: :user
+
   def logo
     (!!self.logo_url && self.logo_url != "") ? self.logo_url : "http://upload.wikimedia.org/wikipedia/commons/a/a4/Socrates_Louvre.jpg"
   end

@@ -7,31 +7,40 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/ui-darkness/jquery-ui.css">
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   <script type="application/json" id="bootstrapped_current_user_json">
+  <% follows = (!!current_user) ? current_user.get_follows : [] %>
     {
       "CURRENT_USER_ID": <%= (!!current_user) ? current_user.id.to_json.html_safe : 0 %>,
-      "FOLLOWS": <%= (!!current_user) ? current_user.follows.to_json.html_safe : [].to_json.html_safe %>,
-      "PAGES": <%= (!!current_user) ? current_user.follows.map{ |x| x.page }.to_json.html_safe : [] %>
+      "FOLLOWS": <%= (!!current_user) ? follows.to_json.html_safe : [].to_json.html_safe %>,
+      "PAGES": <%= (!!current_user) ? follows.map{ |x| x.page }.to_json.html_safe : [] %>
     }
   </script>
   <div class="left-sidebar">
     <%= current_user.username if !!current_user %>
     <%= button_to("Log Out!", session_url, method: :delete) if !!current_user %>
+    <div class="accordion">
+      <% if !!current_user %>
 
-    <% if !!current_user %>
-      <h3>Follows</h3>
-      <div class="follows-area"></div>
-      <%#= render "partials/follows_and_followers" %>
-      <h3>Links</h3>
-      <ul>
-        <li><a href="<%= user_show_url(current_user.username) %>">My Profile</a></li>
-        <li><a href="<%= page_show_url(current_user.username) %>">My Page</a></li>
-        <li><a href="<%= videos_url(current_user.username) %>">My videos</a></li>
-      </ul>
-    <% else #no current user!! %>
-      <%= render "partials/new_session" %>
-      <%= render "partials/new_user" %>
-    <% end %>
+          <h3>Followings</h3>
+          <div class="follows-area"></div>
+          <%#= render "partials/follows_and_followers" %>
+          <h3>Links</h3>
+          <ul>
+            <li><a href="<%= user_show_url(current_user.username) %>">My Profile</a></li>
+            <li><a href="<%= page_show_url(current_user.username) %>">My Page</a></li>
+            <li><a href="<%= videos_url(current_user.username) %>">My videos</a></li>
+          </ul>
+
+      <% else #no current user!! %>
+        <%= render "partials/new_session" %>
+        <%= render "partials/new_user" %>
+      <% end %>
+      <h3>Featured</h3>
+      <div class="featured-area"></div>
+    </div>
   </div>
 
   <div class="main-content">
@@ -41,5 +50,21 @@
   </div>
 
   <div class="right-sidebar"></div>
+  <script>
+    $(document).ready(function(){
+      $(".accordion").accordion({
+        collapsible: true,
+        fillSpace: true,
+        active: 0
+      });
+      $(".follows-area").css("padding",0)
+      $(".follows-area").draggable({
+        appendTo: "body",
+        helper: "clone"
+      });
+      $(".sortable").sortable();
+      //$(".sortable").disableSelection();
+    });
+  </script>
 </body>
 </html>

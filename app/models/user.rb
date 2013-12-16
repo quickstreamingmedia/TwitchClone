@@ -56,12 +56,23 @@ class User < ActiveRecord::Base
   foreign_key: :user_id,
   primary_key: :id
   )
+  has_many(
+  :moderator_objects,
+  class_name: "Moderator",
+  foreign_key: :user_id,
+  primary_key: :id
+  )
 
   def self.find_by_credentials(username, password)
     user = User.find_by_username(username)
     return user if !!user && user.has_password?(password)
 
     nil
+  end
+
+  def get_follows
+    self.setup_follows_and_followers
+    self.follows
   end
 
   def password=(password)
@@ -79,6 +90,36 @@ class User < ActiveRecord::Base
     self.save!
 
     return token
+  end
+
+  def setup_follows_and_followers
+    @user_follows = self.follows
+    user_names = @user_follows.map{ |x| x.username.downcase }
+    @streams_info = JSON.parse(RestClient.get("https://api.twitch.tv/kraken/streams?channel=#{user_names.join('%2C')}"))["streams"]
+
+    @streams_info.each do |stream|
+      next if stream.nil?
+      if stream["channel"]
+        live_user = @user_follows.find{ |x| x.username.downcase == stream["channel"]["display_name"].downcase }
+        if !!live_user && live_user.status != "(LIVE)"
+          live_user.update_attribute(:status, "(LIVE)")
+        end
+        if live_user.status == "(LIVE)"
+          Page.find_by_user_id(live_user.id).update_attribute(:stream_title, stream["channel"]["status"])
+        end
+      end
+    end
+
+    @user_follows.each do |follow|
+      if !@streams_info.find{|x| !x.nil? && x["channel"]["display_name"].downcase == follow.username.downcase }
+        follow.update_attribute(:status, nil) if follow.status == "(LIVE)"
+      end
+    end
+
+    @user_follows = @user_follows.select{ |x| x.status == "(LIVE)"} + @user_follows.reject{ |x| x.status == "(LIVE)"}
+
+    @user_followers = self.followers
+
   end
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131213153437) do
+ActiveRecord::Schema.define(:version => 20131216202334) do
 
   create_table "comments", :force => true do |t|
     t.integer  "parent_id"
@@ -56,6 +56,16 @@ ActiveRecord::Schema.define(:version => 20131213153437) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
+
+  create_table "moderators", :force => true do |t|
+    t.integer  "page_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "moderators", ["page_id"], :name => "index_moderators_on_page_id"
+  add_index "moderators", ["user_id"], :name => "index_moderators_on_user_id"
 
   create_table "pages", :force => true do |t|
     t.integer  "user_id"

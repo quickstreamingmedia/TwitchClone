@@ -1,18 +1,39 @@
+<% if (check_id === null){ %>
+  <div class="newCommentBox">
+    <textarea class="taNew" name="body" placeholder="write your comment here" cols=80 rows=4></textarea>
+    <button class="newCommentButton">Make Comment!</button>
+  </div>
+<% } %>
 <% roots = comments.where({parent_id: check_id}) %>
 <ul>
-<% _.each(roots, function(comment){ %>
-  <li>
+<% _.each(roots, function(comment, index){ %>
+  <% liClass = (expandedComments.indexOf(comment.id) >= 0) ? "expanded" : "collapsed" %>
+  <% aText = (expandedComments.indexOf(comment.id) >= 0) ? "-" : "+" %>
+  <li id="comment-<%= comment.id %>" data-id="<%= comment.id %>" class="<%= liClass %>">
     <div class="comment-area">
+    <% if (comments_by_parent_id[comment.id]){ %>
+      <a class="exp-col" href="#"><%= aText %></a>
+    <% } else { %>
+      <p>.</p>
+    <% } %>
       <% var imgSrc = "http://upload.wikimedia.org/wikipedia/commons/a/a4/Socrates_Louvre.jpg" %>
-      <% imgSrc = comment.get("page_logo_url") ? comment.get("page_logo_url") : imgSrc %>
-      <img src="<%= imgSrc %>" height=30 width=30>
+      <% imgSrc = comment.escape("page_logo_url") ? comment.escape("page_logo_url") : imgSrc %>
+      <img src="<%= imgSrc %>" height=40 width=40>
       <div class="comment-body">
-        <b><%= comment.get("username") + ": " %></b><%= comment.escape("body") %>
+        <div class="comment-info">
+          <b><%= comment.get("username") + ": " %></b>
+          <a href="#" class="reply">(reply)</a>
+        </div>
+        <div class="comment-text"><%= comment.escape("body") %></div>
       </div>
     </div>
-  </li>
+    <div class="replyBox replyBox-<%= comment.id %>">
+      <textarea class="ta-<%= comment.id %>" name="body" placeholder="write your reply here" cols=80 rows=4></textarea>
+      <button class="replyButton" data-id="<%= comment.id %>">Reply!</button>
+    </div>
   <% if (comments_by_parent_id[comment.id]){ %>
-    <%= JST["comments_index"]({ comments: comments, check_id: comment.id, comments_by_parent_id: comments_by_parent_id }) %>
+    <%= JST["comments_index"]({ comments: comments, check_id: comment.id, comments_by_parent_id: comments_by_parent_id, expandedComments: expandedComments }) %>
   <% } %>
+  </li>
 <% }) %>
 </ul>

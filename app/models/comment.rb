@@ -27,6 +27,9 @@ class Comment < ActiveRecord::Base
   primary_key: :id
   )
 
-
-
+  def as_json(options)
+    user = User.find(self.user_id)
+    patch = {username: user.username, page_logo_url: Page.find_by_user_id(user.id).logo_url}
+    super(options).merge(patch)
+  end
 end
