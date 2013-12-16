@@ -24,6 +24,8 @@ class CommentsController < ApplicationController
 
   def update
     comment = Comment.find(params[:id])
+    #NEED TO VALIDATE HERE THAT DELETER IS EITHER
+    #a) THE COMMENT OWNER, b) A PAGE MOD, or c) THE PAGE OWNER
     if !!params[:comment]
 
     else

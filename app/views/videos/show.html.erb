@@ -46,7 +46,8 @@ $(document).ready(function(){
   TwitchClone.Views.commentsIndex = new TwitchClone.Views.CommentsIndex({
     $el: $(".comments-container"),
     collection: TwitchClone.Collections.comments,
-    comments_by_parent_id: data["COMMENTS_BY_PARENT_ID"]
+    comments_by_parent_id: data["COMMENTS_BY_PARENT_ID"],
+    moderators: data["MODERATORS"]
   });
   TwitchClone.Views.commentsIndex.render();
 });

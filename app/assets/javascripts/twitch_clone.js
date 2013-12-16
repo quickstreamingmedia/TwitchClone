@@ -28,7 +28,7 @@ window.TwitchClone = {
     //alert('Hello from Backbone!');
   },
   refetch: function(){
-    TwitchClone.Collections.follows = new TwitchClone.Collections.Follows({id: CURRENT_USER_ID});
+    //TwitchClone.Collections.follows = new TwitchClone.Collections.Follows({id: CURRENT_USER_ID});
     TwitchClone.Collections.follows.fetch();
   }
 };

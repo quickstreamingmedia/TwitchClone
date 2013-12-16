@@ -1,7 +1,7 @@
 TwitchClone.Collections.Follows = Backbone.Collection.extend({
   //follows are really users!
   initialize: function(obj){
-    this.url = "users/" + obj.id + "/follows"
+    this.url = "/users/" + CURRENT_USER_ID + "/follows"
   },
   model: TwitchClone.Models.Follow,
   comparator: function(obj1,obj2){

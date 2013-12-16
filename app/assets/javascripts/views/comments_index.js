@@ -1,8 +1,9 @@
 TwitchClone.Views.CommentsIndex = Backbone.View.extend({
   initialize: function(obj){
     var self = this;
-    this.$el = obj.$el
-    this.comments_by_parent_id = obj.comments_by_parent_id
+    this.$el = obj.$el;
+    this.moderators = obj.moderators;
+    this.comments_by_parent_id = obj.comments_by_parent_id;
     this.listenTo(self.collection, "change", self.render);
     this.listenTo(self.collection, "add", self.render);
     this.expandedComments = [];
@@ -78,7 +79,8 @@ TwitchClone.Views.CommentsIndex = Backbone.View.extend({
       comments: this.collection,
       check_id: null,
       comments_by_parent_id: this.comments_by_parent_id,
-      expandedComments: this.expandedComments
+      expandedComments: this.expandedComments,
+      moderators: this.moderators
     });
     this.$el.html(renderedContent);
     return this;

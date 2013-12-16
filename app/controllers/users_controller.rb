@@ -39,7 +39,10 @@ class UsersController < ApplicationController
   end
 
   def follows
-    render :json => @user_follows
+    if !!current_user
+      follows = current_user.get_follows
+      render :json => follows #@user_follows
+    end
   end
 
   def create

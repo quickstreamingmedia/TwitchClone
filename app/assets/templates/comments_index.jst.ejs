@@ -23,6 +23,9 @@
         <div class="comment-info">
           <b><%= comment.get("username") + ": " %></b>
           <a href="#" class="reply">(reply)</a>
+          <% if(moderators.indexOf(CURRENT_USER_ID) >= 0 || comment.escape("user_id") == CURRENT_USER_ID){ %>
+            <a href="#" class="deleteComment">(delete)</a>
+          <% } %>
         </div>
         <div class="comment-text"><%= comment.escape("body") %></div>
       </div>
@@ -32,7 +35,7 @@
       <button class="replyButton" data-id="<%= comment.id %>">Reply!</button>
     </div>
   <% if (comments_by_parent_id[comment.id]){ %>
-    <%= JST["comments_index"]({ comments: comments, check_id: comment.id, comments_by_parent_id: comments_by_parent_id, expandedComments: expandedComments }) %>
+    <%= JST["comments_index"]({ comments: comments, check_id: comment.id, comments_by_parent_id: comments_by_parent_id, expandedComments: expandedComments, moderators: moderators }) %>
   <% } %>
   </li>
 <% }) %>
