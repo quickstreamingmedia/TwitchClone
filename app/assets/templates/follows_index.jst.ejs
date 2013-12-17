@@ -2,7 +2,7 @@
   <% follows.each(function(follow){ %>
 
     <div class="follow-area">
-      <li >
+      <li data-id="<%= follow.id %>">
         <a href="/<%= follow.escape("username") %>">
           <% var imgSrc = "http://upload.wikimedia.org/wikipedia/commons/a/a4/Socrates_Louvre.jpg" %>
           <% imgSrc = follow.escape("page_logo_url") ? follow.escape("page_logo_url") : imgSrc %>

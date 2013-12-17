@@ -5,6 +5,7 @@ TwitchClone.Views.CommentsIndex = Backbone.View.extend({
     this.moderators = obj.moderators;
     this.comments_by_parent_id = obj.comments_by_parent_id;
     this.listenTo(self.collection, "change", self.render);
+
     this.listenTo(self.collection, "add", self.render);
     this.expandedComments = [];
   },
@@ -12,7 +13,23 @@ TwitchClone.Views.CommentsIndex = Backbone.View.extend({
     "click a.exp-col": "toggleExpCol",
     "click a.reply" : "replyForm",
     "click button.replyButton" : "submitReply",
+    "click a.deleteComment" : "deleteComment",
     "click button.newCommentButton": "submitNew"
+  },
+
+  deleteComment: function(event){
+    event.preventDefault();
+    var $a = $(event.currentTarget);
+    var $li = $a.closest("li");
+    var commentId = $li.attr("data-id")*1;
+    model = this.collection.findWhere({id: commentId});
+    model.url = "/videos/" + videoId + "/comments/" + model.get("id")
+    model.set("body","[deleted]")
+    model.save({
+      success:function(event){
+
+      }
+    });
   },
   submitNew: function(event){
     event.preventDefault();

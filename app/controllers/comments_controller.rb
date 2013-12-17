@@ -23,14 +23,22 @@ class CommentsController < ApplicationController
   end
 
   def update
-    comment = Comment.find(params[:id])
-    #NEED TO VALIDATE HERE THAT DELETER IS EITHER
-    #a) THE COMMENT OWNER, b) A PAGE MOD, or c) THE PAGE OWNER
-    if !!params[:comment]
+    @comment = Comment.find(params[:id])
+    @video = Video.find(params[:video_id])
+    mods = Page.find(@video.user_id).moderators
+    if !!current_user && (current_user.id == @video.user_id || current_user.id == @comment.user_id || mods.include?(current_user))
+      #NEED TO VALIDATE THAT THE COMMENT BEING DELTED DOES NOT BELONG TO THE PAGE OWNER
+      #MODERATORS SHOULD NOT BE ABLE TO DELETE THE COMMENTS OF OTHER MODERATORS
+      if (@comment.user_id == @video.user_id && current_user.id != @video.user_id) ||
+        (!mods.none?{ |x| x.id == @comment.user_id } && current_user.id != @video.user_id)
 
+      else
+        @comment.update_attribute(:body, "[deleted]")
+        render json: @comment
+        #redirect_to video_url(comment.video_id)
+      end
     else
-      comment.update_attribute(:body, "[deleted]")
-      redirect_to video_url(comment.video_id)
+      render json: nil
     end
   end
 

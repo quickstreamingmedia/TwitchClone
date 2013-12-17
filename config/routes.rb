@@ -6,7 +6,8 @@ TwitchClone::Application.routes.draw do
   resources :pages, only: [:update] do
     resources :moderators, only: [:create, :destroy]
   end
-  resources :follows, only: [:create, :destroy, :update]
+  resources :follows, only: [:create, :destroy]
+  put "/follows/:followee_id", to: "follows#update", as: "follow"
   resources :videos, except: [:index, :new] do
     resources :comments, only: [:create, :update]
   end

@@ -8,19 +8,27 @@
 </head>
 <body>
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/ui-darkness/jquery-ui.css">
-  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   <script type="application/json" id="bootstrapped_current_user_json">
   <% follows = (!!current_user) ? current_user.get_follows : [] %>
     {
       "CURRENT_USER_ID": <%= (!!current_user) ? current_user.id.to_json.html_safe : 0 %>,
       "FOLLOWS": <%= (!!current_user) ? follows.to_json.html_safe : [].to_json.html_safe %>,
+      "SORT_PRIORITY": <%= (!!current_user) ? current_user.get_follows_objects.to_json.html_safe : [] %>,
       "PAGES": <%= (!!current_user) ? follows.map{ |x| x.page }.to_json.html_safe : [] %>
     }
   </script>
   <div class="left-sidebar">
-    <%= current_user.username if !!current_user %>
-    <%= button_to("Log Out!", session_url, method: :delete) if !!current_user %>
+    <div class="top-left">
+      <div class="user-name">
+        <%= current_user.username if !!current_user %>
+      </div>
+      <div class="logout">
+        <%= button_to("Log Out!", session_url, method: :delete) if !!current_user %>
+      </div>
+    </div>
+
     <div class="accordion">
       <% if !!current_user %>
 
@@ -47,22 +55,45 @@
     <%= flash[:error] || flash[:success] %>
     <%= yield %>
     <%#= @streams_info %>
+    <div class="notifications group"></div>
   </div>
+
 
   <div class="right-sidebar"></div>
   <script>
     $(document).ready(function(){
+      var data = JSON.parse($("#bootstrapped_current_user_json").html());
+      var CURRENT_USER_ID = data["CURRENT_USER_ID"];
       $(".accordion").accordion({
         collapsible: true,
         fillSpace: true,
-        active: 0
+        active: (CURRENT_USER_ID) ? 0 : 1
       });
       $(".follows-area").css("padding",0)
-      $(".follows-area").draggable({
-        appendTo: "body",
-        helper: "clone"
+      $(".session-form").css("padding",10)
+      $(".new-user-form").css("padding",10)
+      // $(".follow-area").draggable({
+//         appendTo: "body",
+//         helper: "clone"
+//       });
+      $(".sortable").sortable({
+        update: function(event, ui){
+          var $follows = $(".follows-area li")
+          $follows.each(function(index, Element){
+            var id = $(this).attr("data-id")*1;
+            $.ajax({
+              type:"PUT",
+              url: "/follows/" + id,
+              data: {sort_priority: index},
+              success: function(resp){
+                console.log("hello")
+              }
+            })
+          });
+
+
+        }
       });
-      $(".sortable").sortable();
       //$(".sortable").disableSelection();
     });
   </script>

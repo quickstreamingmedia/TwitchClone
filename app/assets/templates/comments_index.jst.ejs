@@ -16,15 +16,22 @@
     <% } else { %>
       <p>.</p>
     <% } %>
+    <div class="comment-img">
+      <% if (moderators.indexOf(comment.escape("user_id")*1) >= 0){ %>
+        <img title="moderator" src="http://upload.wikimedia.org/wikipedia/en/c/c0/Eyeofsauron.jpg" height=40 width=40>
+      <% } %>
       <% var imgSrc = "http://upload.wikimedia.org/wikipedia/commons/a/a4/Socrates_Louvre.jpg" %>
       <% imgSrc = comment.escape("page_logo_url") ? comment.escape("page_logo_url") : imgSrc %>
       <img src="<%= imgSrc %>" height=40 width=40>
+    </div>
       <div class="comment-body">
         <div class="comment-info">
           <b><%= comment.get("username") + ": " %></b>
           <a href="#" class="reply">(reply)</a>
-          <% if(moderators.indexOf(CURRENT_USER_ID) >= 0 || comment.escape("user_id") == CURRENT_USER_ID){ %>
-            <a href="#" class="deleteComment">(delete)</a>
+          <% if(moderators.indexOf(CURRENT_USER_ID) >= 0 ) { %>
+            <% if (comment.escape("body") != "[deleted]" && (CURRENT_USER_ID == videoOwnerId || comment.escape("user_id") == CURRENT_USER_ID || (comment.escape("user_id") != videoOwnerId && moderators.indexOf(comment.escape("user_id")*1) < 0) )){ %>
+              <a href="#" class="deleteComment">(delete)</a>
+            <% } %>
           <% } %>
         </div>
         <div class="comment-text"><%= comment.escape("body") %></div>

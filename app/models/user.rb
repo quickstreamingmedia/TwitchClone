@@ -70,6 +70,15 @@ class User < ActiveRecord::Base
     nil
   end
 
+  def get_follows_objects
+    arr = self.follows_followees
+    h = {}
+    arr.each do |obj|
+      h[obj.followee_id] = obj
+    end
+    return h
+  end
+
   def get_follows
     self.setup_follows_and_followers
     self.follows

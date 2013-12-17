@@ -1,4 +1,4 @@
-html,head, body, div, a, p{
+html,head, body, div, a, p, img{
   padding:0;
   margin:0;
   border:0;
@@ -115,10 +115,11 @@ li.collapsed ul{
 .comment-area a.reply, a.deleteComment{
   float:none;
 }
-.comment-area img{
+.comment-img{
   float:left;
   margin-right:10px;
 }
+
 .replyBox{
   display:none;
 }
@@ -139,6 +140,9 @@ li.collapsed ul{
   background:#222222;
   padding:5px;
 }
+.follow-area img:hover{
+  cursor:move;
+}
 .follow-name{
   padding:5px 0 5px 5px;
   padding-top:8px;
@@ -158,4 +162,33 @@ li.collapsed ul{
 }
 .comments-container img{
   border: 2px outset white;
+}
+.top-left{
+  padding:20px 10px 20px 20px;
+}
+.user-name{
+  float:left;
+  padding-right:20px;
+/*  padding:10px;*/
+}
+.logout{
+/*  padding:10px;*/
+}
+.notifications{
+  width:300px;
+  padding:20px;
+  font-weight:bold;
+  position:fixed;
+  bottom:0;
+  display:none;
+  border:5px solid red;
+}
+.notifications img{
+  width:40px;
+  height:auto;
+  float:left;
+}
+.notification-text{
+  padding:10px 0 0 10px;
+/*  white-space:nowrap;*/
 }

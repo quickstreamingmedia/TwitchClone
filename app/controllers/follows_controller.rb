@@ -23,6 +23,13 @@ class FollowsController < ApplicationController
 
   def update
     #sort priority changes
+    if !!current_user
+      follow = Follow.find_by_follower_id_and_followee_id(current_user.id,params[:followee_id])
+      follow.update_attribute(:sort_priority, params[:sort_priority])
+      render json: "asdf"
+    else
+      render json: nil
+    end
   end
 
 end
