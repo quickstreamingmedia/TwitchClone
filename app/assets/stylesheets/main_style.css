@@ -19,9 +19,10 @@ a:hover {
 a:active {
   text-decoration:underline;
 }
-.left-sidebar{
-  /*border:5px solid green;*/
 
+/* giant containers */
+
+.left-sidebar{
   background-color:#222222;
   color:white;
   position:fixed;
@@ -35,17 +36,11 @@ a:active {
 }
 .main-content{
   position:relative;
-/*  padding:10px;*/
   margin-left: 240px;
   margin-right:340px;
-/*  border:5px solid red;*/
   height: 100%;
-/*  overflow-y:scroll;
-  overflow-x:hidden;*/
-/*  overflow: scroll;*/
 }
 .right-sidebar{
-/*  border:5px solid blue;*/
   position:fixed;
   background-color:#cccccc;
   right:0;
@@ -53,11 +48,17 @@ a:active {
   width:340px;
   height:100%;
 }
+
+/* utility */
+
 .group:after{
   content:"";
   display:block;
   clear:both;
 }
+
+/* top part of pages#show */
+
 .user-logo{
   float:left;
 }
@@ -74,6 +75,9 @@ a:active {
 /*  margin:auto;*/
   font-size:44px;
 }
+
+/* pages#show container */
+
 .container{
 /*  border: 5px solid orange;*/
   float:left;
@@ -81,6 +85,7 @@ a:active {
   width:320px;
   margin-bottom:20px;
   margin-left:30px;
+
 /*  padding:20px;*/
 }
 .container-section{
@@ -90,6 +95,47 @@ a:active {
   width:320px;
   height:auto;
 }
+
+/* Left sidebar follows list */
+
+.follows-area{
+  margin:0;
+}
+.follows-area ul{
+  list-style-type:none;
+  padding:0;
+  margin:0;
+}
+.follow-area{
+/*  border:5px solid red;*/
+/*  padding:10px;*/
+}
+.follow-area li{
+  border:3px outset #ccc;
+  background:#222222;
+  padding:5px;
+}
+.follow-area img:hover{
+  cursor:move;
+}
+.follow-name{
+  padding:5px 0 5px 5px;
+  padding-top:8px;
+  padding-left:50px;
+}
+.follow-area img{
+  border: 2px outset white;
+  float:left;
+}
+
+
+.embed_live{
+  border: 10px solid pink;
+  display:block;
+  margin:auto;
+}
+
+/* comments (videos#show) */
 .comment-area{
   background:#ccc;
   border:5px solid red;
@@ -125,57 +171,30 @@ li.collapsed ul{
 .replyBox{
   display:none;
 }
-.follows-area{
-  margin:0;
-}
-.follows-area ul{
-  list-style-type:none;
-  padding:0;
-  margin:0;
-}
-.follow-area{
-/*  border:5px solid red;*/
-/*  padding:10px;*/
-}
-.follow-area li{
-  border:3px outset #ccc;
-  background:#222222;
-  padding:5px;
-}
-.follow-area img:hover{
-  cursor:move;
-}
-.follow-name{
-  padding:5px 0 5px 5px;
-  padding-top:8px;
-  padding-left:50px;
-}
-.follow-area img{
-  border: 2px outset white;
-  float:left;
-}
-.embed_live{
-  border: 10px solid pink;
-  display:block;
-  margin:auto;
-}
+
 .comments-container ul {
   list-style-type:none;
 }
 .comments-container img{
   border: 2px outset white;
 }
+
+
+/* Left sidebar username and logout button */
 .top-left{
   padding:20px 10px 20px 20px;
 }
+
 .user-name{
   float:left;
   padding-right:20px;
 /*  padding:10px;*/
 }
 .logout{
-/*  padding:10px;*/
 }
+
+/* Notifications for user status changes! */
+
 .notifications{
   background-color:rgba(233,233,233,1);
   width:300px;
@@ -193,8 +212,10 @@ li.collapsed ul{
 }
 .notification-text{
   padding:10px 0 0 10px;
-/*  white-space:nowrap;*/
 }
+
+/*Top Sliver to hide left and right sidebars! */
+
 .side-hider{
   padding:0 10px 0 10px;
 }
@@ -204,6 +225,9 @@ li.collapsed ul{
 .side-hider-right{
   float:right;
 }
+
+/* pages#show view */
+
 .page-show-bg{
   position:absolute;
   z-index:-1;
@@ -211,9 +235,14 @@ li.collapsed ul{
 .gradient{
   position:absolute;
   z-index:-1;
-/*  width:100%;*/
   background: -webkit-linear-gradient(top, rgba(233,233,233,0), rgba(233,233,233,0.8), rgba(233,233,233,1)); /* For Safari */
   background: -o-linear-gradient(bottom, rgba(233,233,233,0), rgba(233,233,233,0.8), rgba(233,233,233,1)); /* For Opera 11.1 to 12.0 */
   background: -moz-linear-gradient(bottom, rgba(233,233,233,0), rgba(233,233,233,0.8), rgba(233,233,233,1)); /* For Firefox 3.6 to 15 */
   background: linear-gradient(to bottom, rgba(233,233,233,0), rgba(233,233,233,0.8), rgba(233,233,233,1)); /* Standard syntax (must be last) */
+}
+
+/* pages#edit view */
+
+.new-container{
+/*  display:none;*/
 }

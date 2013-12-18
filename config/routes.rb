@@ -13,6 +13,8 @@ TwitchClone::Application.routes.draw do
     resources :comments, only: [:create, :update]
   end
 
+  resources :containers, only: [:destroy]
+
 
   resource :session, only: [:new, :create, :destroy]
 

@@ -36,10 +36,17 @@ class PagesController < ApplicationController
       @containers.each_with_index do |container, i|
         container.update_attributes(params[:container][i.to_s])
       end
-      if !params[:container]["new"].values.none?{ |x| x != "" }
-        params[:container][:new][:page_id] = @page.id
-        new_container = Container.create!(params[:container]["new"])
+
+      #new containers!!
+      params[:container].keys.select{|x| /key/.match(x) }.each do |new_container_key|
+        if !params[:container][new_container_key].values.none?{ |x| x != "" }
+          params[:container][new_container_key][:page_id] = @page.id
+          new_container = Container.create!(params[:container][new_container_key])
+        end
       end
+
+
+
       redirect_to page_show_url(@user.username)
     else
       flash[:error] = "You must be logged in as the owner of this page to edit it"

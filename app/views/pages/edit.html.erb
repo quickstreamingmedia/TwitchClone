@@ -7,15 +7,57 @@
 
   <br><br><br>
 
-  <% @containers.each_with_index do |container, i| %>
-    Link to image:<input type="text" name="container[<%= i %>][image_url]" value="<%= container.image_url %>"><br>
-    Image links to:<input type="text" name="container[<%= i %>][image_url_link]" value="<%= container.image_url_link %>"><br>
-    Body: <br><textarea name="container[<%= i %>][body]"><%= container.body %></textarea><br><hr>
-  <% end %>
+  <div class="editable-containers">
+    <% @containers.each_with_index do |container, i| %>
+      <div class="single-container">
+        Link to image:<input type="text" name="container[<%= i %>][image_url]" value="<%= container.image_url %>"><br>
+        Image links to:<input type="text" name="container[<%= i %>][image_url_link]" value="<%= container.image_url_link %>"><br>
+        Body: <br><textarea name="container[<%= i %>][body]"><%= container.body %></textarea><br>
+        <button class="remove-container" data-id="<%= container.id %>">Remove!</button><br><hr>
+      </div>
+    <% end %>
+  </div>
+  <div class="new-editable-containers">
+  </div>
 
-  Link to image:<input type="text" name="container[new][image_url]"><br>
-  Image links to:<input type="text" name="container[new][image_url_link]"><br>
-  Body: <br><textarea name="container[new][body]"></textarea><br><hr>
+  <div class="new-container-button">
+    <button class="add-container">Add Container!</button><br><br>
+  </div>
+
+
 
   <input type="submit" value="Update Page!">
 </form>
+
+<script>
+  $(document).ready(function(){
+    $(".single-container").on("click", "button", function(event){
+      event.preventDefault();
+      var $button = $(event.currentTarget);
+      var $div = $button.closest("div");
+      var containerId = $button.attr("data-id");
+      $div.html("");
+      $.ajax({
+        type:"DELETE",
+        url:"/containers/" + containerId,
+        success: function(resp){
+
+        }
+      })
+
+    })
+
+    var n = 0;
+    $(".new-container-button").on("click","button",function(event){
+      event.preventDefault();
+      var renderedContent = JST['new_container_form']({num: n});
+      $(".new-editable-containers").append(renderedContent)
+      n++;
+    });
+    $(".new-editable-containers").on("click","button",function(event){
+      event.preventDefault();
+      $(event.currentTarget).closest("div").html("");
+    })
+
+  });
+</script>
