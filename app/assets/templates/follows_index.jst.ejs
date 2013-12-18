@@ -6,7 +6,7 @@
         <a href="/<%= follow.escape("username") %>">
           <% var imgSrc = "http://upload.wikimedia.org/wikipedia/commons/a/a4/Socrates_Louvre.jpg" %>
           <% imgSrc = follow.escape("page_logo_url") ? follow.escape("page_logo_url") : imgSrc %>
-          <img src="<%= imgSrc %>" height=30 width=30 >
+          <img src="<%= imgSrc %>" height="30" width="30" >
           <div class="follow-name">
             <%= follow.escape("username") + " " + follow.escape("status") %>
           </div>

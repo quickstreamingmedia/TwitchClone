@@ -30,6 +30,14 @@ class Page < ActiveRecord::Base
   foreign_key: :page_id,
   primary_key: :id
   )
+  has_many(
+  :subscriptions,
+  class_name: "Subscription",
+  foreign_key: :page_id,
+  primary_key: :id
+  )
+
+  has_many :subscribers, through: :subscriptions, source: :user
 
   has_many :moderators, through: :moderator_objects, source: :user
 

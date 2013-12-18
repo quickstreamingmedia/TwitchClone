@@ -62,6 +62,14 @@ class User < ActiveRecord::Base
   foreign_key: :user_id,
   primary_key: :id
   )
+  has_many(
+  :subscriptions,
+  class_name: "Subscription",
+  foreign_key: :user_id,
+  primary_key: :id
+  )
+
+  has_many :subscribed_pages, through: :subscriptions, source: :page
 
   def self.find_by_credentials(username, password)
     user = User.find_by_username(username)

@@ -5,6 +5,7 @@ TwitchClone::Application.routes.draw do
   end
   resources :pages, only: [:update] do
     resources :moderators, only: [:create, :destroy]
+    post "/subscription", to: "subscriptions#subscribe"
   end
   resources :follows, only: [:create, :destroy]
   put "/follows/:followee_id", to: "follows#update", as: "follow"

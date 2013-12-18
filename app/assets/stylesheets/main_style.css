@@ -42,7 +42,7 @@ a:active {
   height: 100%;
 /*  overflow-y:scroll;
   overflow-x:hidden;*/
-  overflow: scroll;
+/*  overflow: scroll;*/
 }
 .right-sidebar{
 /*  border:5px solid blue;*/
@@ -75,19 +75,19 @@ a:active {
   font-size:44px;
 }
 .container{
-  border: 5px solid orange;
+/*  border: 5px solid orange;*/
   float:left;
   font-size:20px;
-  width:400px;
-  margin:20px;
-  padding:20px;
-  /*background-color:rgba(255,255,255,0.5);*/
+  width:320px;
+  margin-bottom:20px;
+  margin-left:30px;
+/*  padding:20px;*/
 }
 .container-section{
-/*  background-color:rgba(255,255,255,0.5);*/
+  margin:auto;
 }
 .container img{
-  max-width:400px;
+  width:320px;
   height:auto;
 }
 .comment-area{
@@ -177,6 +177,7 @@ li.collapsed ul{
 /*  padding:10px;*/
 }
 .notifications{
+  background-color:rgba(233,233,233,1);
   width:300px;
   padding:20px;
   font-weight:bold;

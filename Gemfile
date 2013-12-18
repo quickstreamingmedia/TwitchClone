@@ -18,6 +18,8 @@ gem 'ejs'
 
 gem 'bcrypt-ruby', require: 'bcrypt'
 
+gem 'paypal-sdk-rest'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'

@@ -63,5 +63,8 @@ module TwitchClone
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+
+    PayPal::SDK::Core::Config.load("#{config.root}/config/paypal.yml",  ENV['RACK_ENV'] || 'development')
   end
 end

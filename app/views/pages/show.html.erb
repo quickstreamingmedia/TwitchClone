@@ -26,8 +26,12 @@
     <% end %>
   </header>
     <%= render "partials/embed_live" %>
-  <div class="follow-button-container"></div>
-    <%= render "partials/tweet" %>
+    <div class="sub-video-buttons-wrapper">
+      <div class="follow-button-container"></div>
+      <div class="subscribe-button-container"></div>
+      <%= render "partials/tweet" %>
+    </div>
+
 <section class="group container-section">
   <% @containers.each do |container| %>
     <div class="container">
@@ -53,6 +57,28 @@ $(document).ready(function(){
   if (CURRENT_USER_ID === <%= @page.user_id %>){
     $(".follow-button-container").css("display","none")
   }
+  var resizeFun = function() {
+    var width = $(".main-content").width();
+    var $containerWrapper = $(".container-section")
+    $canvas.css("top",-10);
+    $gradient.css("width",$canvas.css("width"));
+    $gradient.css("height","100%");
+    var n = 1;
+    while (width/(n*350) > 1){
+      n++;
+    }
+    if (n >= 2){
+      $containerWrapper.width(350*(n-1))
+    }
+    $containerWrapper.css("margin","auto");
+    var marginLeftString = $containerWrapper.css("margin-left");
+    var marginLeft = marginLeftString.substring(0,marginLeftString.length-2)*1;
+    $containerWrapper.css("margin-left",marginLeft-15 + "px");
+  }
+
+  resizeFun();
+
+  $( window ).resize(resizeFun);
 
   <% if !!@page.background_url && @page.background_url != "" %>
     //$canvas.attr("image","<%= @page.background_url %>");
@@ -68,7 +94,23 @@ $(document).ready(function(){
 //     $canvas.css("background-position","50% 0%");
     $canvas.css("opacity",0.5);
   <% end %>
+
+  //backbone stuff for follow button AND subscribe button?
   if (CURRENT_USER_ID){
+    var $subButtonDiv = $(".subscribe-button-container");
+    $subButtonDiv.html("<button class=subscribe >Subscribe!</button>")
+    $subButtonDiv.on("click","button",function(event){
+      event.preventDefault();
+      $.ajax({
+        type:"POST",
+        url:"pages/<%= @page.id %>/subscription",
+        data:{ user_id: CURRENT_USER_ID },
+        success: function(resp){
+          console.log(resp);
+        }
+      })
+    });
+
     var fol = TwitchClone.Collections.follows.findWhere({id: <%= @user.id %>})
     if (fol){
       TwitchClone.Views.followsForm = new TwitchClone.Views.FollowsForm({
