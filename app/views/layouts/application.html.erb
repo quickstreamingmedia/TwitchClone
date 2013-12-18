@@ -53,6 +53,10 @@
 
   <div class="main-content">
     <%= flash[:error] || flash[:success] %>
+    <div class="side-hider group">
+      <div class="side-hider-left"><a data-id="left" href="#">hide</a></div>
+      <div class="side-hider-right"><a data-id="right" href="#">hide</a></div>
+    </div>
     <%= yield %>
     <%#= @streams_info %>
     <div class="notifications group"></div>
@@ -64,6 +68,32 @@
     $(document).ready(function(){
       var data = JSON.parse($("#bootstrapped_current_user_json").html());
       var CURRENT_USER_ID = data["CURRENT_USER_ID"];
+      $(".side-hider").on("click","a",function(event){
+        event.preventDefault();
+        var $canvas = $(".page-show-bg");
+        $canvas.css("width","100%");
+        $canvas.css("height","auto");
+
+        var $gradient = $(".gradient");
+        $gradient.css("width","100%");
+        $gradient.css("height","100%");
+
+        var $a = $(event.currentTarget);
+        var side = $a.attr("data-id");
+        var action = $a.text();
+        if (action == "hide"){
+          $(".main-content").css("margin-" + side,0);
+          $("." + side + "-sidebar").css("display","none");
+          $a.text("show");
+        } else {
+          var margin = (side == "right") ? 340 : 240;
+          $(".main-content").css("margin-" + side,margin);
+          $("." + side + "-sidebar").css("display","block");
+          $a.text("hide");
+        }
+
+      });
+
       $(".accordion").accordion({
         collapsible: true,
         fillSpace: true,

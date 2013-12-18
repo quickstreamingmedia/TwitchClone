@@ -35,13 +35,14 @@ a:active {
 }
 .main-content{
   position:relative;
-  padding:10px;
+/*  padding:10px;*/
   margin-left: 240px;
   margin-right:340px;
 /*  border:5px solid red;*/
-  height:100%;
-  overflow-y:scroll;
-  overflow-x:hidden;
+  height: 100%;
+/*  overflow-y:scroll;
+  overflow-x:hidden;*/
+  overflow: scroll;
 }
 .right-sidebar{
 /*  border:5px solid blue;*/
@@ -65,11 +66,12 @@ a:active {
 }
 .page-show-header img{
   border:5px solid black;
+  margin-right:20px;
 }
 .page-show-title{
   padding:20px;
   width:800px;
-  margin:auto;
+/*  margin:auto;*/
   font-size:44px;
 }
 .container{
@@ -82,7 +84,7 @@ a:active {
   /*background-color:rgba(255,255,255,0.5);*/
 }
 .container-section{
-  background-color:rgba(255,255,255,0.5);
+/*  background-color:rgba(255,255,255,0.5);*/
 }
 .container img{
   max-width:400px;
@@ -191,4 +193,26 @@ li.collapsed ul{
 .notification-text{
   padding:10px 0 0 10px;
 /*  white-space:nowrap;*/
+}
+.side-hider{
+  padding:0 10px 0 10px;
+}
+.side-hider-left{
+  float:left;
+}
+.side-hider-right{
+  float:right;
+}
+.page-show-bg{
+  position:absolute;
+  z-index:-1;
+}
+.gradient{
+  position:absolute;
+  z-index:-1;
+/*  width:100%;*/
+  background: -webkit-linear-gradient(top, rgba(233,233,233,0), rgba(233,233,233,0.8), rgba(233,233,233,1)); /* For Safari */
+  background: -o-linear-gradient(bottom, rgba(233,233,233,0), rgba(233,233,233,0.8), rgba(233,233,233,1)); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom, rgba(233,233,233,0), rgba(233,233,233,0.8), rgba(233,233,233,1)); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom, rgba(233,233,233,0), rgba(233,233,233,0.8), rgba(233,233,233,1)); /* Standard syntax (must be last) */
 }

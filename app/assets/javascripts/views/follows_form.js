@@ -1,10 +1,8 @@
 TwitchClone.Views.FollowsForm = Backbone.View.extend({
   initialize: function(obj){
-    console.log(obj)
     this.followeeId = obj.followeeId,
     this.followClass = obj.followClass
     this.$el = obj.$el
-    console.log(this.followClass)
   },
   events: {
     "click button.follow": "addFollow",

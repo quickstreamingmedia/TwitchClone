@@ -2,16 +2,14 @@ class FollowsController < ApplicationController
 
 
   def create
-    follow = Follow.new(followee_id: params[:followee_id], follower_id: current_user.id)
-    follow.save!
-    @user = User.find(params[:followee_id])
-    render :json => @user
-    # if follow.save
-#       redirect_to page_show_url(User.find(params[:follow][:followee_id]).username)
-#     else
-#       flash[:error] = "follow unsucessful :("
-#       redirect_to root_url
-#     end
+    if !current_user || params[:followee_id] == current_user.id
+      render :json => nil
+    else
+      follow = Follow.new(followee_id: params[:followee_id], follower_id: current_user.id)
+      follow.save!
+      @user = User.find(params[:followee_id])
+      render :json => @user
+    end
   end
 
   def destroy

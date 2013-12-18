@@ -1,22 +1,4 @@
 <style>
-  div.bg-test{
-    position:fixed;
-    top:0;
-    left:240px;
-    height:100%;
-    width:100%;
-    <% if !!@page.background_url && @page.background_url != "" %>
-      background:<%= " url('#{@page.background_url}') no-repeat ".html_safe %>;
-    <% else %>
-      background: #cccccc;
-    <% end %>
-    background-size:70%;
-    opacity: 0.5;
-  }
-  div.not-bg{
-    position:relative;
-    z-index:1;
-  }
   button.follow{
     display:block;
   }
@@ -30,7 +12,9 @@
     display:none;
   }
 </style>
-<div class="bg-test"></div>
+<img class="page-show-bg"></img>
+<div class="gradient"></div>
+<!-- <div class="bg-test"></div> -->
 <div class="not-bg">
   <header class="page-show-header group">
     <% imgsrc = @page.logo %>
@@ -64,6 +48,26 @@
 
 <script>
 $(document).ready(function(){
+  var $canvas = $(".page-show-bg");
+  var $gradient = $(".gradient");
+  if (CURRENT_USER_ID === <%= @page.user_id %>){
+    $(".follow-button-container").css("display","none")
+  }
+
+  <% if !!@page.background_url && @page.background_url != "" %>
+    //$canvas.attr("image","<%= @page.background_url %>");
+    $canvas.css("width","100%");
+    $canvas.css("height","auto");
+    $canvas.css("top",-10);
+    $gradient.css("width",$canvas.css("width"));
+    $gradient.css("height","100%");
+    console.log($canvas.css("height"))
+    //$canvas.css("background-image","url('<%= @page.background_url %>')");
+    $canvas.attr("src",'<%= @page.background_url %>');
+    // $canvas.css("background-repeat","no-repeat");
+//     $canvas.css("background-position","50% 0%");
+    $canvas.css("opacity",0.5);
+  <% end %>
   if (CURRENT_USER_ID){
     var fol = TwitchClone.Collections.follows.findWhere({id: <%= @user.id %>})
     if (fol){
