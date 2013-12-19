@@ -10,11 +10,11 @@ class ChatsController < ApplicationController
 
       status_icons = ""
       if current_user.username == page_owner.username
-        status_icons << "<img class=chat-status width=20 height=20 src='http://c.dryicons.com/images/icon_sets/minimalistica_red_icons/png/128x128/camcorder.png' >"
+        status_icons << "<img class=chat-status title='caster' width=20 height=20 src='http://c.dryicons.com/images/icon_sets/minimalistica_red_icons/png/128x128/camcorder.png' >"
       end
 
       if !!page_owner && page_owner.page.moderators.include?(current_user)
-        status_icons << "<img class=chat-status width=20 height=20 src='http://upload.wikimedia.org/wikipedia/en/c/c0/Eyeofsauron.jpg' >"
+        status_icons << "<img class=chat-status title='moderator' width=20 height=20 src='http://upload.wikimedia.org/wikipedia/en/c/c0/Eyeofsauron.jpg' >"
       end
 
       chat_partial = render_to_string(partial: "partials/chats", locals: {

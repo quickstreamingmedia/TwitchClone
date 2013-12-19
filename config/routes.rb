@@ -4,7 +4,8 @@ TwitchClone::Application.routes.draw do
     get "/follows", to: "users#follows"
   end
   resources :pages, only: [:update] do
-    resources :moderators, only: [:create, :destroy]
+    resources :moderators, only: [:create]
+    delete "/moderators/:user_id", to: "moderators#destroy"
     post "/subscription", to: "subscriptions#subscribe"
   end
   resources :follows, only: [:create, :destroy]

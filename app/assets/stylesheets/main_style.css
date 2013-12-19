@@ -316,3 +316,16 @@ li.collapsed ul{
 .chat-show-no{
   display:none;
 }
+
+.can-mod .mod{
+  display:block;
+}
+.can-mod .unmod{
+  display:none;
+}
+.can-unmod .mod{
+  display:none;
+}
+.can-unmod .unmod{
+  display:block;
+}
