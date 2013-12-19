@@ -17,7 +17,6 @@ window.TwitchClone = {
           "sort_priority": (typeof data["SORT_PRIORITY"][model.id]["sort_priority"] == "number") ? data["SORT_PRIORITY"][model.id]["sort_priority"] : 99999
         })
       });
-      console.log(TwitchClone.Collections.follows)
       TwitchClone.Collections.follows.sort();
       TwitchClone.Views.followsIndex = new TwitchClone.Views.FollowsIndex({
         "collection": TwitchClone.Collections.follows,

@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131218172107) do
+ActiveRecord::Schema.define(:version => 20131219160527) do
+
+  create_table "chat_icons", :force => true do |t|
+    t.integer  "page_id"
+    t.string   "match"
+    t.string   "img_url"
+    t.boolean  "page_specific"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "chat_icons", ["page_id"], :name => "index_chat_icons_on_page_id"
+  add_index "chat_icons", ["page_specific"], :name => "index_chat_icons_on_page_specific"
 
   create_table "comments", :force => true do |t|
     t.integer  "parent_id"

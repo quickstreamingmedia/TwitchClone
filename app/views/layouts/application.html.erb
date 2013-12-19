@@ -63,14 +63,26 @@
   </div>
 
 
-  <div class="right-sidebar"></div>
+  <div class="right-sidebar">
+
+    <div class="chat-window">
+      <div id="chat-user-show" class="chat-show-no"></div>
+    </div>
+    <div class="chat-text-box">
+      <textarea class="chat-textarea" name="chat[text]" placeholder="type your message here"></textarea>
+      <button class="chat-button">Chat!</button>
+    </div>
+  </div>
+  <script src="http://js.pusher.com/2.1/pusher.min.js"></script>
   <script>
+
+
     $(document).ready(function(){
       var data = JSON.parse($("#bootstrapped_current_user_json").html());
       var CURRENT_USER_ID = data["CURRENT_USER_ID"];
+
       $(".side-hider").on("click","a",function(event){
         event.preventDefault();
-
 
         //refactor using addClass and removeClass!!!!!
         var $canvas = $(".page-show-bg");
@@ -127,7 +139,7 @@
 
         }
       });
-      //$(".sortable").disableSelection();
+
     });
   </script>
 </body>

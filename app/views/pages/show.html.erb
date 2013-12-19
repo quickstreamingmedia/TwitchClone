@@ -49,11 +49,19 @@
     <%= link_to("Edit", edit_page_url(@user.username)) if @user.username == current_user.username %>
   <% end %>
 </div>
-
+<script type="application/json" id="bootstrapped_mods">
+{
+  "MODERATORS": <%= @page.moderators.map{|x| x.id }.to_json.html_safe %>
+}
+</script>
 <script>
 $(document).ready(function(){
   var $canvas = $(".page-show-bg");
   var $gradient = $(".gradient");
+
+  var modsData = JSON.parse($("#bootstrapped_mods").html());
+  var modsArrayIds = modsData["MODERATORS"];
+
   if (CURRENT_USER_ID === <%= @page.user_id %>){
     $(".follow-button-container").css("display","none")
   }
@@ -80,6 +88,128 @@ $(document).ready(function(){
 
   $( window ).resize(resizeFun);
 
+  var tFun = function(event) {
+    if (event.which == 13) {
+      chatText(event);
+    }
+  };
+
+  var followFun = function(id){
+    if (CURRENT_USER_ID){
+      var fol = TwitchClone.Collections.follows.findWhere({id: id})
+      if (fol){
+        TwitchClone.Views.followsForm = new TwitchClone.Views.FollowsForm({
+          "$el": $(".chat-show-follow"),
+          "followeeId": id,
+          "followClass": "unfollow"
+        });
+      } else {
+        TwitchClone.Views.followsForm = new TwitchClone.Views.FollowsForm({
+          "$el": $(".chat-show-follow"),
+          "followeeId": id,
+          "followClass": "follow"
+        });
+      }
+      TwitchClone.Views.followsForm.render();
+    }
+  }
+
+  $(".chat-text-box").on("click","button",function(event){
+    chatText(event);
+  })
+  $(".chat-textarea").on("keydown",tFun);
+
+  $(".chat-window").on("click","a.username",function(event){
+    event.preventDefault();
+    $a = $(event.currentTarget);
+    $div = $a.closest(".single-chat");
+    var clickedUser = $div.attr("data-name");
+    var clickedId = $div.attr("data-id");
+    //create div to show username, and button to follow, link to channel and link to profile
+    //div can have an id so that there's only one at a time? just change html
+    //class toggle for visible/invisible?
+    var $show = $("#chat-user-show");
+    $show.addClass("chat-show-yes");
+    $show.removeClass("chat-show-no");
+    var htmlStr = "<div class='group chat-show-head'>";
+    htmlStr = htmlStr + "<h2>" + clickedUser + "</h2><a class='close-show' href='#'>X</a></div>";
+    if (clickedId*1 != CURRENT_USER_ID*1){
+      htmlStr = htmlStr + "<div class='chat-show-follow'></div>";
+    }
+
+    if (modsArrayIds.indexOf(CURRENT_USER_ID) >= 0 || CURRENT_USER_ID == <%= @page.user_id %>){
+      htmlStr = htmlStr + "<a href='#' class='silence-user' data-id='" + clickedUser + "'>Silence!</a>"
+    }
+    $show.html(htmlStr);
+
+    followFun(clickedId*1);
+
+  })
+
+  $("#chat-user-show").on("click","a.silence-user",function(event){
+    event.preventDefault();
+    $a = $(event.currentTarget);
+    var username = $a.attr("data-id");
+    $.ajax({
+      type:"POST",
+      url:"/chat_silence",
+      data:{page_name: path, username: username},
+      error: function(resp){
+        if (resp){
+          var $chatWindow = $(".chat-window")
+          console.log(resp)
+          $chatWindow.append("<div style='color:#b0b0b0;' >" + resp.responseText + "</div>");
+          var h = $chatWindow[0].scrollHeight;
+          $chatWindow.scrollTop(h);
+        }
+      }
+    })
+  });
+
+  $("#chat-user-show").on("click","a.close-show",function(event){
+    event.preventDefault();
+    var $show = $("#chat-user-show");
+    $show.html("");
+    $show.removeClass("chat-show-yes");
+    $show.addClass("chat-show-no");
+
+  })
+
+  var chatText = function(event){
+    event.preventDefault();
+    var $textArea = $(".chat-textarea");
+    var text = $textArea.val();
+    $textArea.val("");
+    $(".chat-button").attr("disabled", "disabled");
+    $(".chat-textarea").off("keydown",tFun);
+    window.setTimeout(function(){
+      $(".chat-button").removeAttr("disabled");
+      $(".chat-textarea").on("keydown",tFun);
+    },2000);
+    $.ajax({
+      type:"POST",
+      url:"/chat",
+      data:{text: text, page_name: path},
+      success: function(resp){}
+    })
+  };
+
+  var path = window.location.pathname;
+  path = path.substring(1);
+
+  var pusher = new Pusher('<%= ENV["PUSHER_KEY"] %>');
+  var channel = pusher.subscribe(path);
+  channel.bind('new', function(data) {
+    var $chatWindow = $(".chat-window")
+    $chatWindow.append(data);
+    var h = $chatWindow[0].scrollHeight;
+    $chatWindow.scrollTop(h);
+  });
+  channel.bind('silence', function(data){
+    $(".chat-"+data).html("&lt;message deleted&gt;")
+  });
+
+
   <% if !!@page.background_url && @page.background_url != "" %>
     //$canvas.attr("image","<%= @page.background_url %>");
     $canvas.css("width","100%");
@@ -87,7 +217,6 @@ $(document).ready(function(){
     $canvas.css("top",-10);
     $gradient.css("width",$canvas.css("width"));
     $gradient.css("height","100%");
-    console.log($canvas.css("height"))
     //$canvas.css("background-image","url('<%= @page.background_url %>')");
     $canvas.attr("src",'<%= @page.background_url %>');
     // $canvas.css("background-repeat","no-repeat");
@@ -106,7 +235,6 @@ $(document).ready(function(){
         url:"pages/<%= @page.id %>/subscription",
         data:{ user_id: CURRENT_USER_ID },
         success: function(resp){
-          console.log(resp);
         }
       })
     });

@@ -1,0 +1,11 @@
+<div class="single-chat group" data-name="<%= username %>" data-id="<%= id %>">
+  <% esc_body = h(body) %>
+  <% icon_objects.each do |icon| %>
+  <% esc_body.gsub!(icon.match,"<img src=#{icon.img_url} height=30 width=30>") %>
+  <% end %>
+    <%= status_icons.html_safe %>
+    <div class="single-chat-content">
+      <b><a href="#" class="username"><%= username %>:</a></b>
+      <span class="chat-<%= username %>"> <%= esc_body.html_safe %></span>
+    </div>
+</div>

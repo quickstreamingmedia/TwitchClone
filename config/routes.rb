@@ -18,6 +18,8 @@ TwitchClone::Application.routes.draw do
 
   resource :session, only: [:new, :create, :destroy]
 
+  post "/chat", to: "chats#chat", as: "chat"
+  post "/chat_silence", to: "chats#silence", as: "silence"
   get "/404", to: "static_pages#not_found", as: "not_found"
   get "/:username/videos", to: "videos#index", as: "videos"
   get "/:username/profile/edit", to: "users#edit", as: "edit_user"
