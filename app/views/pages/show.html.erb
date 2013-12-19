@@ -33,6 +33,7 @@
     </div>
 
 <section class="group container-section">
+  <div class="container-wrapper">
   <% @containers.each do |container| %>
     <div class="container">
       <% if !!container.image_url %>
@@ -44,6 +45,7 @@
       <%= Maruku.new(h(container.body)).to_html.html_safe %><br>
     </div>
   <% end %>
+  </div>
 </section>
   <% if !!@user && !!current_user %>
     <%= link_to("Edit", edit_page_url(@user.username)) if @user.username == current_user.username %>
@@ -65,28 +67,28 @@ $(document).ready(function(){
   if (CURRENT_USER_ID === <%= @page.user_id %>){
     $(".follow-button-container").css("display","none")
   }
-  var resizeFun = function() {
-    var width = $(".main-content").width();
-    var $containerWrapper = $(".container-section")
-    $canvas.css("top",-10);
-    $gradient.css("width",$canvas.css("width"));
-    $gradient.css("height","100%");
-    var n = 1;
-    while (width/(n*350) > 1){
-      n++;
-    }
-    if (n >= 2){
-      $containerWrapper.width(350*(n-1))
-    }
-    $containerWrapper.css("margin","auto");
-    var marginLeftString = $containerWrapper.css("margin-left");
-    var marginLeft = marginLeftString.substring(0,marginLeftString.length-2)*1;
-    $containerWrapper.css("margin-left",marginLeft-15 + "px");
-  }
-
-  resizeFun();
-
-  $( window ).resize(resizeFun);
+  // var resizeFun = function() {
+//     var width = $(".main-content").width();
+//     var $containerWrapper = $(".container-section")
+//     $canvas.css("top",-10);
+//     $gradient.css("width",$canvas.css("width"));
+//     $gradient.css("height","100%");
+//     var n = 1;
+//     while (width/(n*350) > 1){
+//       n++;
+//     }
+//     if (n >= 2){
+//       $containerWrapper.width(350*(n-1))
+//     }
+//     $containerWrapper.css("margin","auto");
+//     var marginLeftString = $containerWrapper.css("margin-left");
+//     var marginLeft = marginLeftString.substring(0,marginLeftString.length-2)*1;
+//     $containerWrapper.css("margin-left",marginLeft-15 + "px");
+//   }
+//
+//   resizeFun();
+//
+//   $( window ).resize(resizeFun);
 
   var tFun = function(event) {
     if (event.which == 13) {

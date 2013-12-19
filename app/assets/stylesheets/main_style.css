@@ -80,17 +80,32 @@ a:active {
 
 .container{
 /*  border: 5px solid orange;*/
-  float:left;
+/*  float:left;*/
   font-size:20px;
   width:320px;
   margin-bottom:20px;
-  margin-left:30px;
+  display:inline-block;
+/*  margin-left:30px;*/
 
 /*  padding:20px;*/
 }
 .container-section{
   margin:auto;
 }
+.container-wrapper{
+  margin:auto;
+  width:700px;
+  -moz-column-count:2; /* Firefox */
+  -webkit-column-count:2; /* Safari and Chrome */
+  column-count:2;
+  -moz-column-gap:40px; /* Firefox */
+  -webkit-column-gap:40px; /* Safari and Chrome */
+  column-gap:40px;
+  column-width:320px;
+  -moz-column-width:320px; /* Firefox */
+  -webkit-column-width:320px; /* Safari and Chrome */
+}
+
 .container img{
   width:320px;
   height:auto;
