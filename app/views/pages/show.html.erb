@@ -17,9 +17,16 @@
 <!-- <div class="bg-test"></div> -->
 <div class="not-bg">
   <header class="page-show-header group">
-    <% imgsrc = @page.logo %>
-    <a href="<%= user_show_url(@page.user.username) %>">
-      <%= "<img src=#{h(imgsrc)} height=80 width=80 class='user-logo'>".html_safe %>
+    <a class="page-show-link" href="<%= user_show_url(@page.user.username) %>">
+
+      <% imgsrc = @page.logo %>
+
+        <%= "<img src=#{h(imgsrc)} height=80 width=80 class='user-logo'>".html_safe %>
+
+      <div class="page-show-img-overlay">
+        Go to profile
+      </div>
+
     </a>
     <% if !!@page.stream_title && @page.stream_title != "" %>
       <h2 class="page-show-title"><%= h(@page.stream_title) %></h2>
@@ -87,6 +94,8 @@ $(document).ready(function(){
       TwitchClone.Views.followsForm.render();
     }
   }
+
+  $(".right-sidebar-buttons-wrapper a.a-other").text("Videos");
 
   $(".chat-text-box").on("click","button",function(event){
     chatText(event);

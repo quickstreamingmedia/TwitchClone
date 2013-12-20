@@ -4,6 +4,9 @@ html,head, body, div, a, p, img{
   border:0;
   font-family:sans-serif;
 }
+body{
+  overflow-x:hidden;
+}
 
 a:link {
   text-decoration:none;
@@ -60,18 +63,38 @@ a:active {
 /* top part of pages#show */
 
 .user-logo{
-  float:left;
+/*  float:left;*/
 }
 .page-show-header{
   margin:20px;
 }
-.page-show-header img{
+.page-show-link{
+  float:left;
+  position:relative;
+  display:block;
+  width:80px;
   border:5px outset white;
   margin-right:20px;
 }
-.page-show-header img:hover{
-  border:5px outset red;
+.page-show-link img{
+  display:block;
 }
+
+.page-show-img-overlay{
+  padding:15px;
+  position:absolute;
+  display:none;
+  top:0;
+  left:0;
+  width:50px;
+  height:50px;
+  background:rgba(30,30,30,0.9);
+  color:white;
+}
+.page-show-link:hover .page-show-img-overlay{
+  display:block;
+}
+
 .page-show-title{
   padding:20px;
   width:800px;
@@ -95,23 +118,136 @@ a:active {
 .container-section{
   margin:auto;
 }
-.container-wrapper{
-  margin:auto;
-  width:700px;
-  -moz-column-count:2; /* Firefox */
-  -webkit-column-count:2; /* Safari and Chrome */
-  column-count:2;
-  -moz-column-gap:40px; /* Firefox */
-  -webkit-column-gap:40px; /* Safari and Chrome */
-  column-gap:40px;
-  column-width:320px;
-  -moz-column-width:320px; /* Firefox */
-  -webkit-column-width:320px; /* Safari and Chrome */
+
+/* resizing container stuff */
+
+@media all and (min-width: 680px){
+  .right-hide.left-hide .container-wrapper{
+    margin:auto;
+    width:680px;
+    -moz-column-count:2; /* Firefox */
+    -webkit-column-count:2; /* Safari and Chrome */
+    column-count:2;
+    column-width:320px;
+    -moz-column-width:320px; /* Firefox */
+    -webkit-column-width:320px; /* Safari and Chrome */
+  }
+}
+@media all and (min-width: 1040px){
+  .right-hide.left-hide .container-wrapper{
+    margin:auto;
+    width:1040px;
+    -moz-column-count:3; /* Firefox */
+    -webkit-column-count:3; /* Safari and Chrome */
+    column-count:3;
+    column-width:320px;
+    -moz-column-width:320px; /* Firefox */
+    -webkit-column-width:320px; /* Safari and Chrome */
+  }
+}
+@media all and (min-width: 940px){
+  .right-hide .container-wrapper{
+    margin:auto;
+    width:680px;
+    -moz-column-count:2; /* Firefox */
+    -webkit-column-count:2; /* Safari and Chrome */
+    column-count:2;
+    column-width:320px;
+    -moz-column-width:320px; /* Firefox */
+    -webkit-column-width:320px; /* Safari and Chrome */
+  }
+}
+@media all and (min-width: 1300px){
+  .right-hide .container-wrapper{
+    margin:auto;
+    width:1040px;
+    -moz-column-count:3; /* Firefox */
+    -webkit-column-count:3; /* Safari and Chrome */
+    column-count:3;
+    column-width:320px;
+    -moz-column-width:320px; /* Firefox */
+    -webkit-column-width:320px; /* Safari and Chrome */
+  }
+}
+@media all and (min-width: 1040px){
+  .left-hide .container-wrapper{
+    margin:auto;
+    width:680px;
+    -moz-column-count:2; /* Firefox */
+    -webkit-column-count:2; /* Safari and Chrome */
+    column-count:2;
+    column-width:320px;
+    -moz-column-width:320px; /* Firefox */
+    -webkit-column-width:320px; /* Safari and Chrome */
+  }
+}
+@media all and (min-width: 1400px){
+  .left-hide .container-wrapper{
+    margin:auto;
+    width:1040px;
+    -moz-column-count:3; /* Firefox */
+    -webkit-column-count:3; /* Safari and Chrome */
+    column-count:3;
+    column-width:320px;
+    -moz-column-width:320px; /* Firefox */
+    -webkit-column-width:320px; /* Safari and Chrome */
+  }
+}
+
+@media all and (min-width: 0){
+  .container-wrapper{
+    margin:auto;
+    width:320px;
+    -moz-column-count:1; /* Firefox */
+    -webkit-column-count:1; /* Safari and Chrome */
+    column-count:1;
+    -moz-column-gap:40px; /* Firefox */
+    -webkit-column-gap:40px; /* Safari and Chrome */
+    column-gap:40px;
+    column-width:320px;
+    -moz-column-width:320px; /* Firefox */
+    -webkit-column-width:320px; /* Safari and Chrome */
+  }
+}
+@media all and (min-width: 1280px){
+  .container-wrapper{
+    margin:auto;
+    width:680px;
+    -moz-column-count:2; /* Firefox */
+    -webkit-column-count:2; /* Safari and Chrome */
+    column-count:2;
+    -moz-column-gap:40px; /* Firefox */
+    -webkit-column-gap:40px; /* Safari and Chrome */
+    column-gap:40px;
+    column-width:320px;
+    -moz-column-width:320px; /* Firefox */
+    -webkit-column-width:320px; /* Safari and Chrome */
+  }
+}
+@media all and (min-width: 1640px){
+  .container-wrapper{
+    margin:auto;
+    width:1040px;
+    -moz-column-count:3; /* Firefox */
+    -webkit-column-count:3; /* Safari and Chrome */
+    column-count:3;
+    -moz-column-gap:40px; /* Firefox */
+    -webkit-column-gap:40px; /* Safari and Chrome */
+    column-gap:40px;
+    column-width:320px;
+    -moz-column-width:320px; /* Firefox */
+    -webkit-column-width:320px; /* Safari and Chrome */
+  }
 }
 
 .container img{
   width:320px;
   height:auto;
+}
+.side-containers{
+  height:100px;
+  position:relative;
+  overflow-y:scroll;
 }
 
 /* Left sidebar follows list */
@@ -235,6 +371,7 @@ li.collapsed ul{
 /*Top Sliver to hide left and right sidebars! */
 
 .side-hider{
+
   padding:0 10px 0 10px;
 }
 .side-hider-left{
@@ -250,6 +387,7 @@ li.collapsed ul{
   position:absolute;
   z-index:-1;
 }
+
 .gradient{
   position:absolute;
   z-index:-1;
@@ -266,17 +404,43 @@ li.collapsed ul{
 }
 
 /* Right sidebar chat stuff */
-
+.right-sidebar{
+  border-left:1px solid #aaa;
+}
+.right-sidebar-buttons{
+  padding-top:20px;
+  background-color:#e5e5e5;
+  height:50px;
+  border-bottom:1px solid #aaa;
+}
+.right-sidebar-buttons-wrapper{
+  margin:auto;
+  width:250px;
+}
+.right-sidebar-buttons a{
+  padding:5px 35px 5px 35px;
+  margin:0;
+  background-color:#ededed;
+  border:1px solid #aaa;
+}
+.right-sidebar-buttons a:hover{
+  text-decoration:none;
+}
+.right-sidebar-buttons a.current-tab{
+  background-color:#cccccc;
+  color:white;
+}
 .chat-window{
   position:relative;
   overflow-y:scroll;
   overflow-x:hidden;
-  height:80%;
+  height:100px;
   padding-left:10px;
+  border-bottom:1px solid #aaa;
 }
 .chat-text-box{
   padding:10px;
-  height:20%;
+  height:110px;
   background-color:#e5e5e5;
 }
 .chat-textarea{
@@ -346,4 +510,30 @@ li.collapsed ul{
 }
 .can-unmod .unmod{
   display:block;
+}
+
+/* user#show aka profile */
+
+.user-show-bg{
+  position:absolute;
+  top:0;
+  z-index:-1;
+  width:100%;
+  height:auto;
+}
+.user-show-bg img{
+
+  width:100%;
+  height:auto;
+}
+.rel{
+  position:relative;
+}
+
+.bio-overlay{
+  bottom:0;
+  position:absolute;
+  width:100%;
+  color:white;
+  background-color:rgba(30,30,30,0.8);
 }

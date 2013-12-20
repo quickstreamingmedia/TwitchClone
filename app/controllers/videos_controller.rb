@@ -5,7 +5,7 @@ class VideosController < ApplicationController
     if !!@user
       @videos = @user.videos
       @test = self.update_videos
-      @videos = Video.find_all_by_user_id(@user.id)
+      # @videos = Video.find_all_by_user_id(@user.id)
       render :index
     else
       redirect_to not_found_url

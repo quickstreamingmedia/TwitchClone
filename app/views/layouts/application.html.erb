@@ -64,13 +64,23 @@
 
 
   <div class="right-sidebar">
-
-    <div class="chat-window">
-      <div id="chat-user-show" class="chat-show-no"></div>
+    <div class="right-sidebar-buttons">
+      <div class="right-sidebar-buttons-wrapper">
+        <a href="#" data-id="1" class="current-tab a-chat">Chat</a>
+        <a href="#" data-id="2" class="a-other ">?</a>
+      </div>
     </div>
-    <div class="chat-text-box">
-      <textarea class="chat-textarea" name="chat[text]" placeholder="type your message here"></textarea>
-      <button class="chat-button">Chat!</button>
+    <div class="1-wrapper">
+      <div class="chat-window">
+        <div id="chat-user-show" class="chat-show-no"></div>
+      </div>
+      <div class="chat-text-box">
+        <textarea class="chat-textarea" name="chat[text]" placeholder="type your message here"></textarea>
+        <button class="chat-button">Chat!</button>
+      </div>
+    </div>
+    <div class="2-wrapper" style="display:none;">
+      WOOO!!!
     </div>
   </div>
   <script src="http://js.pusher.com/2.1/pusher.min.js"></script>
@@ -84,15 +94,26 @@
       var $gradient = $(".gradient");
       var resizeFun = function() {
         var width = $(".main-content").width();
-
-        $gradient.css("width",width);
+        $gradient.css("width",width+100);
         $gradient.css("height","100%");
-
+        var height = $(".left-sidebar").height();
+        $(".chat-window").css("height",height-160);
+        $(".side-containers").css("height",height-50);
       }
+
+      $(".right-sidebar-buttons-wrapper").on("click","a",function(event){
+        event.preventDefault();
+        var $a = $(event.currentTarget);
+        $(".right-sidebar-buttons-wrapper a").removeClass("current-tab");
+        $a.addClass("current-tab");
+        var clickClass = $a.attr("data-id")*1;
+        $("." + clickClass + "-wrapper").css("display","block");
+        $("." + (clickClass+1)%2 + "-wrapper").css("display","none");
+      })
 
       resizeFun();
 
-      $( window ).resize(resizeFun);
+      $(window).resize(resizeFun);
 
       $(".side-hider").on("click","a",function(event){
         event.preventDefault();
@@ -113,11 +134,13 @@
           $(".main-content").css("margin-" + side,0);
           $("." + side + "-sidebar").css("display","none");
           $a.text("show");
+          $("body").addClass(side + "-hide");
         } else {
           var margin = (side == "right") ? 340 : 240;
           $(".main-content").css("margin-" + side,margin);
           $("." + side + "-sidebar").css("display","block");
           $a.text("hide");
+          $("body").removeClass(side + "-hide");
         }
 
       });

@@ -1,13 +1,170 @@
-<h1><%= @user.username %>'s Profile Page!</h1>
-<%= link_to("Edit", edit_user_url(@user.username)) %><br><br>
-Bio: <%= @user.long_bio %>
+
+<% imgSrc = h(@user.page.banner_url) %>
+<% imgSrc = (!!imgSrc && imgSrc != "") ? imgSrc : "http://silencenogood.net/wordpress/wp-content/uploads/2011/11/Nintendo-banner.jpg" %>
+<div class="user-show-bg">
+
+  <span class="rel">
+    <img src="<%= imgSrc %>">
+    <div class="bio-overlay">
+      <h1><%= @user.username %>'s Profile Page!</h1>
+      Bio: <%= @user.long_bio %>
+    </div>
+  </span>
+
+
+</div>
+
+<%= link_to("Edit", edit_user_url(@user.username)) %>
+
 
 <div style="display:none" class="temp-container">
-  <%= render "partials/containers" %>
+  <div class="side-containers">
+    <%= render "partials/containers" %>
+  </div>
+  <div></div>
 </div>
 <script>
 $(document).ready(function(){
   var rightSide = $(".temp-container").html();
+  $(".2-wrapper").html(rightSide);
+  $(".right-sidebar-buttons-wrapper a.a-other").text("Info");
 
+
+  var tFun = function(event) {
+    if (event.which == 13) {
+      chatText(event);
+    }
+  };
+
+  $(".chat-textarea").on("keydown",tFun);
+
+  $(".chat-window").on("click","a.username",function(event){
+    event.preventDefault();
+    $a = $(event.currentTarget);
+    $div = $a.closest(".single-chat");
+    var clickedUser = $div.attr("data-name");
+    var clickedId = $div.attr("data-id");
+    //create div to show username, and button to follow, link to channel and link to profile
+    //div can have an id so that there's only one at a time? just change html
+    //class toggle for visible/invisible?
+    var $show = $("#chat-user-show");
+    $show.addClass("chat-show-yes");
+    $show.removeClass("chat-show-no");
+    var htmlStr = "<div class='group chat-show-head'>";
+    htmlStr = htmlStr + "<h2>" + clickedUser + "</h2><a class='close-show' href='#'>X</a></div>";
+    if (clickedId*1 != CURRENT_USER_ID*1){
+      htmlStr = htmlStr + "<div class='chat-show-follow'></div>";
+    }
+    if (CURRENT_USER_ID*1 == <%= @page.user_id %>){
+      htmlStr = htmlStr + "<div class='mod-buttons' data-id='" + clickedId + "'>";
+      htmlStr = htmlStr + "<button class='mod'>Make Moderator</button><button class='unmod'>Remove Moderator</button></div>";
+    }
+
+    if (modsArrayIds.indexOf(CURRENT_USER_ID) >= 0 || CURRENT_USER_ID == <%= @page.user_id %>){
+      htmlStr = htmlStr + "<a href='#' class='silence-user' data-id='" + clickedUser + "'>Silence!</a>"
+    }
+    $show.html(htmlStr);
+    if(modsArrayIds.indexOf(clickedId*1) >= 0){
+      $(".mod").closest("div").addClass("can-unmod");
+      $(".mod").closest("div").removeClass("can-mod");
+    } else {
+      $(".mod").closest("div").addClass("can-mod");
+      $(".mod").closest("div").removeClass("can-unmod");
+    }
+
+    followFun(clickedId*1);
+
+  })
+
+  $("#chat-user-show").on("click","button.mod",function(event){
+    event.preventDefault();
+    var $modDiv = $(".mod-buttons");
+    var userId = $modDiv.attr("data-id")*1;
+    $modDiv.addClass("can-unmod");
+    $modDiv.removeClass("can-mod");
+    $.ajax({
+      type:"POST",
+      url:"/pages/<%= @page.id %>/moderators",
+      data:{user_id: userId}
+    })
+    modsArrayIds.push(userId);
+  })
+  $("#chat-user-show").on("click","button.unmod",function(event){
+    event.preventDefault();
+    var $modDiv = $(".mod-buttons");
+    var userId = $modDiv.attr("data-id")*1;
+    $modDiv.addClass("can-mod");
+    $modDiv.removeClass("can-unmod");
+    $.ajax({
+      type:"DELETE",
+      url:"/pages/<%= @page.id %>/moderators/" + userId
+    })
+    var idx = modsArrayIds.indexOf(userId);
+    modsArrayIds.splice(idx,1);
+  })
+
+  $("#chat-user-show").on("click","a.silence-user",function(event){
+    event.preventDefault();
+    $a = $(event.currentTarget);
+    var username = $a.attr("data-id");
+    $.ajax({
+      type:"POST",
+      url:"/chat_silence",
+      data:{page_name: path, username: username},
+      error: function(resp){
+        if (resp){
+          var $chatWindow = $(".chat-window")
+          console.log(resp)
+          $chatWindow.append("<div style='color:#b0b0b0;' >" + resp.responseText + "</div>");
+          var h = $chatWindow[0].scrollHeight;
+          $chatWindow.scrollTop(h);
+        }
+      }
+    })
+  });
+
+  $("#chat-user-show").on("click","a.close-show",function(event){
+    event.preventDefault();
+    var $show = $("#chat-user-show");
+    $show.html("");
+    $show.removeClass("chat-show-yes");
+    $show.addClass("chat-show-no");
+
+  })
+
+  var chatText = function(event){
+    event.preventDefault();
+    var $textArea = $(".chat-textarea");
+    var text = $textArea.val();
+    $textArea.val("");
+    $(".chat-button").attr("disabled", "disabled");
+    $(".chat-textarea").off("keydown",tFun);
+    window.setTimeout(function(){
+      $(".chat-button").removeAttr("disabled");
+      $(".chat-textarea").on("keydown",tFun);
+    },2000);
+    $.ajax({
+      type:"POST",
+      url:"/chat",
+      data:{text: text, page_name: path},
+      success: function(resp){}
+    })
+  };
+
+  var path = window.location.pathname;
+  path = path.substring(1,path.length-8);
+  console.log(path)
+
+  var pusher = new Pusher('<%= ENV["PUSHER_KEY"] %>');
+  var channel = pusher.subscribe(path);
+  channel.bind('new', function(data) {
+    var $chatWindow = $(".chat-window")
+    $chatWindow.append(data);
+    var h = $chatWindow[0].scrollHeight;
+    $chatWindow.scrollTop(h);
+  });
+  channel.bind('silence', function(data){
+    $(".chat-"+data).html("&lt;message deleted&gt;")
+  });
 })
 </script>
