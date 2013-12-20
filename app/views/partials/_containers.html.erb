@@ -1,0 +1,12 @@
+
+  <% @containers.each do |container| %>
+    <div class="container">
+      <% if !!container.image_url %>
+
+        <% ahref = (container.image_url_link != "" && !!container.image_url_link) ? container.image_url_link : "#" %>
+
+        <%= "<a href=#{h(ahref)} ><img src=#{h(container.image_url)}></a><br>".html_safe %>
+      <% end %>
+      <%= Maruku.new(h(container.body)).to_html.html_safe %><br>
+    </div>
+  <% end %>

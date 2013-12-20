@@ -81,9 +81,22 @@
       var data = JSON.parse($("#bootstrapped_current_user_json").html());
       var CURRENT_USER_ID = data["CURRENT_USER_ID"];
 
+      var $gradient = $(".gradient");
+      var resizeFun = function() {
+        var width = $(".main-content").width();
+
+        $gradient.css("width",width);
+        $gradient.css("height","100%");
+
+      }
+
+      resizeFun();
+
+      $( window ).resize(resizeFun);
+
       $(".side-hider").on("click","a",function(event){
         event.preventDefault();
-
+        resizeFun();
         //refactor using addClass and removeClass!!!!!
         var $canvas = $(".page-show-bg");
         $canvas.css("width","100%");

@@ -20,6 +20,7 @@ gem 'bcrypt-ruby', require: 'bcrypt'
 
 gem 'paypal-sdk-rest'
 gem 'pusher'
+gem 'kaminari'
 
 group :development do
   gem 'better_errors'

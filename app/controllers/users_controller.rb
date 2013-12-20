@@ -61,6 +61,9 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by_username(params[:username])
     if !!@user
+      @follows = current_user.follows if !!current_user
+      @page = Page.find_by_user_id(@user.id)
+      @containers = Container.find_all_by_page_id(@page.id)
       render :show
     else
       redirect_to not_found_url

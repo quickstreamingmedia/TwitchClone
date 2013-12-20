@@ -66,8 +66,11 @@ a:active {
   margin:20px;
 }
 .page-show-header img{
-  border:5px solid black;
+  border:5px outset white;
   margin-right:20px;
+}
+.page-show-header img:hover{
+  border:5px outset red;
 }
 .page-show-title{
   padding:20px;
@@ -145,7 +148,7 @@ a:active {
 
 
 .embed_live{
-  border: 10px solid pink;
+/*  border: 10px solid pink;*/
   display:block;
   margin:auto;
 }
@@ -218,7 +221,7 @@ li.collapsed ul{
   position:fixed;
   bottom:0;
   display:none;
-  border:5px solid red;
+  border:5px outset red;
 }
 .notifications img{
   width:40px;

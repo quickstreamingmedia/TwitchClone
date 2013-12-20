@@ -18,7 +18,9 @@
 <div class="not-bg">
   <header class="page-show-header group">
     <% imgsrc = @page.logo %>
-    <%= "<img src=#{h(imgsrc)} height=80 width=80 class='user-logo'>".html_safe %>
+    <a href="<%= user_show_url(@page.user.username) %>">
+      <%= "<img src=#{h(imgsrc)} height=80 width=80 class='user-logo'>".html_safe %>
+    </a>
     <% if !!@page.stream_title && @page.stream_title != "" %>
       <h2 class="page-show-title"><%= h(@page.stream_title) %></h2>
     <% else %>
@@ -31,22 +33,13 @@
       <div class="subscribe-button-container"></div>
       <%= render "partials/tweet" %>
     </div>
+    <section class="group container-section">
+      <div class="container-wrapper">
+        <%= render "partials/containers" %>
+      </div>
+    </section>
 
-<section class="group container-section">
-  <div class="container-wrapper">
-  <% @containers.each do |container| %>
-    <div class="container">
-      <% if !!container.image_url %>
 
-        <% ahref = (container.image_url_link != "" && !!container.image_url_link) ? container.image_url_link : "#" %>
-
-        <%= "<a href=#{h(ahref)} ><img src=#{h(container.image_url)}></a><br>".html_safe %>
-      <% end %>
-      <%= Maruku.new(h(container.body)).to_html.html_safe %><br>
-    </div>
-  <% end %>
-  </div>
-</section>
   <% if !!@user && !!current_user %>
     <%= link_to("Edit", edit_page_url(@user.username)) if @user.username == current_user.username %>
   <% end %>
@@ -67,28 +60,7 @@ $(document).ready(function(){
   if (CURRENT_USER_ID === <%= @page.user_id %>){
     $(".follow-button-container").css("display","none")
   }
-  // var resizeFun = function() {
-//     var width = $(".main-content").width();
-//     var $containerWrapper = $(".container-section")
-//     $canvas.css("top",-10);
-//     $gradient.css("width",$canvas.css("width"));
-//     $gradient.css("height","100%");
-//     var n = 1;
-//     while (width/(n*350) > 1){
-//       n++;
-//     }
-//     if (n >= 2){
-//       $containerWrapper.width(350*(n-1))
-//     }
-//     $containerWrapper.css("margin","auto");
-//     var marginLeftString = $containerWrapper.css("margin-left");
-//     var marginLeft = marginLeftString.substring(0,marginLeftString.length-2)*1;
-//     $containerWrapper.css("margin-left",marginLeft-15 + "px");
-//   }
-//
-//   resizeFun();
-//
-//   $( window ).resize(resizeFun);
+
 
   var tFun = function(event) {
     if (event.which == 13) {
@@ -248,6 +220,7 @@ $(document).ready(function(){
   channel.bind('silence', function(data){
     $(".chat-"+data).html("&lt;message deleted&gt;")
   });
+
 
 
   <% if !!@page.background_url && @page.background_url != "" %>
