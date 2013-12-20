@@ -167,6 +167,8 @@ $(document).ready(function(){
     modsArrayIds.splice(idx,1);
   })
 
+  $(".chat-window").append("<div style='color:#b0b0b0;' >Welcome to the chat room!</div>")
+
   $("#chat-user-show").on("click","a.silence-user",function(event){
     event.preventDefault();
     $a = $(event.currentTarget);

@@ -431,6 +431,7 @@ li.collapsed ul{
   color:white;
 }
 .chat-window{
+  background-color:#d5d5d5;
   position:relative;
   overflow-y:scroll;
   overflow-x:hidden;
