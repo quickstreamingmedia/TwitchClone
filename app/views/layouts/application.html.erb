@@ -49,6 +49,7 @@
       <h3>Featured</h3>
       <div class="featured-area"></div>
     </div>
+    <button class="demo-button pseudo-button" title="log in with a demo account">Demo!!</button>
   </div>
 
   <div class="main-content">
@@ -76,7 +77,7 @@
       </div>
       <div class="chat-text-box">
         <textarea class="chat-textarea" name="chat[text]" placeholder="type your message here"></textarea>
-        <button class="chat-button">Chat!</button>
+        <button class="chat-button pseudo-button">Chat!</button>
       </div>
     </div>
     <div class="2-wrapper" style="display:none;">
@@ -97,8 +98,13 @@
         $gradient.css("width",width+100);
         $gradient.css("height","100%");
         var height = $(".left-sidebar").height();
-        $(".chat-window").css("height",height-160);
+        $(".chat-window").css("height",height-180);
         $(".side-containers").css("height",height-50);
+        var $mainContent = $(".main-content");
+        var windowHeight = $(window).height();
+        if ($mainContent.height() < windowHeight){
+          $mainContent.css("height",windowHeight);
+        }
       }
 
       $(".right-sidebar-buttons-wrapper").on("click","a",function(event){
@@ -145,7 +151,7 @@
 
       });
 
-      $(".accordion").accordion({
+      $(".accordion").accordion({//heightStyle: "fill"
         collapsible: false,
         fillSpace: true,
         active: (CURRENT_USER_ID) ? 0 : 1

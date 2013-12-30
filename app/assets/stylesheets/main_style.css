@@ -387,6 +387,20 @@ li.collapsed ul{
   position:absolute;
   z-index:-1;
 }
+.sub-video-buttons-wrapper{
+  width:800px;
+  margin:auto;
+  padding:10px;
+}
+.sub-video-buttons-wrapper div{
+  padding-right:10px;
+  float:left;
+}
+
+.edit-link{
+  position:fixed;
+  bottom:0;
+}
 
 .gradient{
   position:absolute;
@@ -448,6 +462,7 @@ li.collapsed ul{
   resize:none;
   width:300px;
   height:40px;
+  margin-bottom:5px;
 }
 .single-chat{
 
@@ -524,8 +539,8 @@ li.collapsed ul{
 }
 .user-show-bg img{
 
-  width:100%;
-  height:auto;
+  height:480px;
+  width:auto;
 }
 .rel{
   position:relative;
@@ -538,3 +553,45 @@ li.collapsed ul{
   color:white;
   background-color:rgba(30,30,30,0.8);
 }
+
+/* other buttons */
+.pseudo-button {
+  padding:5px 35px 5px 35px;
+  margin:0;
+  color:white;
+  font-weight:bold;
+  background-image: -webkit-gradient(
+  	linear,
+  	left top,
+  	left bottom,
+  	color-stop(0, #8266b6),
+  	color-stop(1, #533787)
+  );
+  background-image: -o-linear-gradient(bottom, #8266b6 0%, #533787 100%);
+  background-image: -moz-linear-gradient(bottom, #8266b6 0%, #533787 100%);
+  background-image: -webkit-linear-gradient(bottom, #8266b6 0%, #533787 100%);
+  background-image: -ms-linear-gradient(bottom, #8266b6 0%, #533787 100%);
+  background-image: linear-gradient(to bottom, #8266b6 0%, #533787 100%);
+  border-top: 1px solid #5b3f8f;
+  border-left: 1px solid #412771;
+  border-right: 1px solid #412771;
+  border-bottom: 1px solid #2a1453;
+}
+.pseudo-button:hover{
+  text-decoration:none;
+  cursor:pointer;
+}
+
+/* main (root) page */
+.root-header{
+  margin:auto;
+  width:750px;
+}
+.root-header a{
+  text-decoration:underline;
+}
+.demo-button{
+  font-size:32px;
+  margin:25px;
+}
+
