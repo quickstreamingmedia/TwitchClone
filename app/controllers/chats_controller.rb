@@ -9,6 +9,7 @@ class ChatsController < ApplicationController
     end
     watchings = Watching.find_all_by_page_id(page.id)
     Pusher[params[:page_name]].trigger("viewers", current_user.username) if !!current_user
+    render json: nil
   end
 
   def stop_watching
@@ -18,6 +19,7 @@ class ChatsController < ApplicationController
       watch.destroy
       Pusher[params[:page_name]].trigger("leave", current_user.username)
     end
+    render json: nil
   end
 
   def chat
