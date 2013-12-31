@@ -552,11 +552,52 @@ li.collapsed ul{
 }
 
 .bio-overlay{
-  bottom:0;
+  bottom:4px;
   position:absolute;
   width:100%;
   color:white;
   background-color:rgba(30,30,30,0.8);
+}
+.bio-overlay p{
+/*  width:80%;*/
+  z-index:10;
+  width:40%;
+}
+.profile-edit-link{
+  position:absolute;
+  bottom:0;
+}
+.profile-tabs{
+  margin:auto;
+  margin-top:480px;
+
+  width:90%;
+}
+.profile-tabs-ul{
+  padding-left:0;
+  list-style-type:none;
+  border-bottom:1px solid gray;
+}
+.profile-tabs-ul > li{
+  margin-right:50px;
+  color:gray;
+  padding-bottom:15px;
+  float:left;
+}
+.profile-tabs-ul > li.profile-active-tab{
+  text-decoration:none;
+  color:black;
+  border-bottom:3px solid gray;
+}
+.profile-tabs-ul > li.profile-active-tab > a:hover{
+  text-decoration:none;
+}
+
+.profile-tabs div{
+  display:none;
+}
+.profile-tabs div.profile-active-div{
+  display:block;
 }
 
 /* other buttons */

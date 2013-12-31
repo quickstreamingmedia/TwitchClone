@@ -7,14 +7,33 @@
     <img src="<%= imgSrc %>">
     <div class="bio-overlay">
       <h1><%= @user.username %>'s Profile Page!</h1>
-      Bio: <%= @user.long_bio %>
+      <p><b>Bio:</b> <%= @user.long_bio %></p>
     </div>
   </span>
 
 
 </div>
 
-<%= link_to("Edit", edit_user_url(@user.username)) %>
+<div class="profile-edit-link">
+  <%= link_to("Edit", edit_user_url(@user.username)) %>
+</div>
+<div class="profile-tabs">
+  <ul class="profile-tabs-ul group">
+    <li class="profile-active-tab" data-name="profile-videos"><a href="#">Past Broadcasts</a></li>
+    <li data-name="profile-follows"><a href="#">Following</a></li>
+    <li data-name="profile-followers"><a href="#">Followers</a></li>
+  </ul>
+
+  <div class="profile-videos profile-active-div">
+    <% @videos.each do |video| %>
+      <h2><%= video.title %></h2>
+      <%= "<a href=#{video_url(video.id)} ><img src=#{h(video.thumbnail_url)} height=63 width=112></a>".html_safe %>
+      <%= video.description %>
+    <% end %>
+  </div>
+  <div class="profile-follows"></div>
+  <div class="profile-followers"></div>
+</div>
 
 
 <div style="display:none" class="temp-container">
@@ -28,6 +47,16 @@ $(document).ready(function(){
   var rightSide = $(".temp-container").html();
   $(".2-wrapper").html(rightSide);
   $(".right-sidebar-buttons-wrapper a.a-other").text("Info");
+
+  $(".profile-tabs-ul").on("click","a",function(event){
+    event.preventDefault();
+    var $li = $(event.currentTarget).closest("li");
+    $("li").removeClass("profile-active-tab");
+    $li.addClass("profile-active-tab");
+    var showDivClass = $li.attr("data-name");
+    $(".profile-tabs div").removeClass("profile-active-div");
+    $("." + showDivClass).addClass("profile-active-div");
+  })
 
 
   var tFun = function(event) {
