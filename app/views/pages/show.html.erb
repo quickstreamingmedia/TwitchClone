@@ -251,11 +251,17 @@ $(document).ready(function(){
   });
   channel.bind('viewers', function(data){
     var viewerNames = data.split(",");
+    if (viewerNames.length == 1 && viewerNames[0] == ""){
+      viewerNames = [];
+    }
     $(".viewers-count").text("Viewers: " + viewerNames.length);
     console.log(data);
   });
   channel.bind('leave', function(data){
     var viewerNames = data.split(",");
+    if (viewerNames.length == 1 && viewerNames[0] == ""){
+      viewerNames = [];
+    }
     $(".viewers-count").text("Viewers: " + viewerNames.length);
     console.log(data);
   });
