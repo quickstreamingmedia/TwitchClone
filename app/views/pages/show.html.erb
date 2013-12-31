@@ -60,7 +60,9 @@
 }
 </script>
 <script>
+
 $(document).ready(function(){
+
   var $canvas = $(".page-show-bg");
   var $gradient = $(".gradient");
 
@@ -223,6 +225,14 @@ $(document).ready(function(){
   var path = window.location.pathname;
   path = path.substring(1);
 
+  window.onbeforeunload = function(e){
+    $.ajax({
+      type:"DELETE",
+      url:"/chat_leave/" + path
+    })
+
+  };
+
   var pusher = new Pusher('<%= ENV["PUSHER_KEY"] %>');
   var channel = pusher.subscribe(path);
   channel.bind('new', function(data) {
@@ -234,7 +244,18 @@ $(document).ready(function(){
   channel.bind('silence', function(data){
     $(".chat-"+data).html("&lt;message deleted&gt;")
   });
+  channel.bind('viewers', function(data){
+    console.log(data);
+  });
+  channel.bind('leave', function(data){
+    console.log(data + " left");
+  });
 
+  $.ajax({
+    type:"POST",
+    url:"/chat_watch/",
+    data:{page_name: path}
+  })
 
 
   <% if !!@page.background_url && @page.background_url != "" %>

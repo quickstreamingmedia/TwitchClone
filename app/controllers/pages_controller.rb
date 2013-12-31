@@ -38,14 +38,14 @@ class PagesController < ApplicationController
       end
 
       #new containers!!
-      params[:container].keys.select{|x| /key/.match(x) }.each do |new_container_key|
-        if !params[:container][new_container_key].values.none?{ |x| x != "" }
-          params[:container][new_container_key][:page_id] = @page.id
-          new_container = Container.create!(params[:container][new_container_key])
+      if !!params[:container]
+        params[:container].keys.select{|x| /key/.match(x) }.each do |new_container_key|
+          if !params[:container][new_container_key].values.none?{ |x| x != "" }
+            params[:container][new_container_key][:page_id] = @page.id
+            new_container = Container.create!(params[:container][new_container_key])
+          end
         end
       end
-
-
 
       redirect_to page_show_url(@user.username)
     else

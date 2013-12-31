@@ -15,12 +15,15 @@ TwitchClone::Application.routes.draw do
   end
 
   resources :containers, only: [:destroy]
+  resources :watchings, only: [:create, :destroy]
 
 
   resource :session, only: [:new, :create, :destroy]
 
   post "/chat", to: "chats#chat", as: "chat"
   post "/chat_silence", to: "chats#silence", as: "silence"
+  post "/chat_watch", to: "chats#start_watching", as: "watch"
+  delete "/chat_leave/:page_name", to: "chats#stop_watching", as: "leave"
   get "/404", to: "static_pages#not_found", as: "not_found"
   get "/:username/videos", to: "videos#index", as: "videos"
   get "/:username/profile/edit", to: "users#edit", as: "edit_user"
