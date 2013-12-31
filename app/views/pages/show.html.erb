@@ -260,11 +260,15 @@ $(document).ready(function(){
     console.log(data);
   });
 
-  $.ajax({
-    type:"POST",
-    url:"/chat_watch/",
-    data:{page_name: path}
-  })
+  channel.bind('pusher:subscription_succeeded', function() {
+    $.ajax({
+      type:"POST",
+      url:"/chat_watch/",
+      data:{page_name: path}
+    })
+  });
+
+
 
 
   <% if !!@page.background_url && @page.background_url != "" %>
