@@ -1,7 +1,7 @@
 class ChatsController < ApplicationController
 
   def start_watching
-    page = Page.find_by_user_id(User.find_by_username(params[:page_name]))
+    page = Page.find_by_user_id(User.find_by_username(params[:page_name]).id)
     if !!current_user
       if !Watching.find_by_user_id_and_page_id(current_user.id, page.id)
         watch = Watching.create!(user_id: current_user.id, page_id: page.id)
@@ -13,7 +13,7 @@ class ChatsController < ApplicationController
 
   def stop_watching
     if !!current_user
-      page = Page.find_by_user_id(User.find_by_username(params[:page_name]))
+      page = Page.find_by_user_id(User.find_by_username(params[:page_name]).id)
       watch = Watching.find_by_user_id_and_page_id(current_user.id, page.id)
       watch.destroy
       Pusher[params[:page_name]].trigger("leave", current_user.username)
