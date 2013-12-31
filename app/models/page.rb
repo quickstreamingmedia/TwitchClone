@@ -37,6 +37,8 @@ class Page < ActiveRecord::Base
   primary_key: :id
   )
 
+  has_many :viewers, through: :current_viewers, source: :user
+
   has_many :subscribers, through: :subscriptions, source: :user
 
   has_many :moderators, through: :moderator_objects, source: :user

@@ -7,8 +7,8 @@ class ChatsController < ApplicationController
         watch = Watching.create!(user_id: current_user.id, page_id: page.id)
       end
     end
-    watchings = Watching.find_all_by_page_id(page.id)
-    Pusher[params[:page_name]].trigger("viewers", current_user.username) if !!current_user
+
+    Pusher[params[:page_name]].trigger("viewers", page.viewers.map{ |x| x.username }.join(","))
     render json: nil
   end
 
@@ -16,8 +16,8 @@ class ChatsController < ApplicationController
     if !!current_user
       page = Page.find_by_user_id(User.find_by_username(params[:page_name]).id)
       watch = Watching.find_by_user_id_and_page_id(current_user.id, page.id)
-      watch.destroy
-      Pusher[params[:page_name]].trigger("leave", current_user.username)
+      watch.destroy if !!watch
+      Pusher[params[:page_name]].trigger("leave", page.viewers.map{ |x| x.username }.join(","))
     end
     render json: nil
   end

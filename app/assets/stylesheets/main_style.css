@@ -396,6 +396,11 @@ li.collapsed ul{
   padding-right:10px;
   float:left;
 }
+.sub-video-buttons-wrapper .sub-video-buttons-right{
+  padding-right:0;
+  float:right;
+}
+
 
 .edit-link{
   position:fixed;

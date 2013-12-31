@@ -35,10 +35,15 @@
     <% end %>
   </header>
     <%= render "partials/embed_live" %>
-    <div class="sub-video-buttons-wrapper">
-      <div class="follow-button-container"></div>
-      <div class="subscribe-button-container"></div>
-      <%= render "partials/tweet" %>
+    <div class="sub-video-buttons-wrapper group">
+      <div class="sub-video-buttons-left">
+        <div class="follow-button-container"></div>
+        <div class="subscribe-button-container"></div>
+        <%= render "partials/tweet" %>
+      </div>
+      <div class="sub-video-buttons-right">
+        <span class="viewers-count">Viewers: 0</span>
+      </div>
     </div>
     <section class="group container-section">
       <div class="container-wrapper">
@@ -245,10 +250,14 @@ $(document).ready(function(){
     $(".chat-"+data).html("&lt;message deleted&gt;")
   });
   channel.bind('viewers', function(data){
+    var viewerNames = data.split(",");
+    $(".viewers-count").text("Viewers: " + viewerNames.length);
     console.log(data);
   });
   channel.bind('leave', function(data){
-    console.log(data + " left");
+    var viewerNames = data.split(",");
+    $(".viewers-count").text("Viewers: " + viewerNames.length);
+    console.log(data);
   });
 
   $.ajax({
