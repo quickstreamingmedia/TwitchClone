@@ -1,8 +1,9 @@
+
 <object class="embed_live" type="application/x-shockwave-flash"
         height="450"
         width="800"
         id="live_embed_player_flash"
-        data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=<%= @user.username %>"
+        data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=<%= user %>"
         bgcolor="#000000">
   <param  name="allowFullScreen"
           value="true" />
@@ -13,5 +14,5 @@
   <param  name="movie"
           value="http://www.twitch.tv/widgets/live_embed_player.swf" />
   <param  name="flashvars"
-          value="hostname=www.twitch.tv&channel=<%= @user.username %>&auto_play=true&start_volume=20" />
+          value="hostname=www.twitch.tv&channel=<%= user %>&auto_play=true&start_volume=20" />
 </object>

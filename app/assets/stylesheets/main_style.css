@@ -552,6 +552,7 @@ li.collapsed ul{
 }
 
 .bio-overlay{
+  padding:10px;
   bottom:4px;
   position:absolute;
   width:100%;
@@ -560,7 +561,7 @@ li.collapsed ul{
 }
 .bio-overlay p{
 /*  width:80%;*/
-  z-index:10;
+/*  padding:10px;*/
   width:40%;
 }
 .profile-edit-link{

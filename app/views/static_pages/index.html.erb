@@ -2,11 +2,15 @@
     <h1>Welcome to FunTimesTwitch: A <a href="http://twitch.tv">Twitch.tv</a> Clone!</h1>
 </header>
 
+<%#= render "partials/embed_live", user: "streamerhouse" %>
+
 <script>
 
 
 $(document).ready(function(){
   $(".right-sidebar-buttons-wrapper a.a-other").text("News");
   var $news = $(".2-wrapper");
+  var newsStr = "<h2>Site News!</h2><p>This site is coming along nicely</p>";
+  $news.html(newsStr);
 })
 </script>
