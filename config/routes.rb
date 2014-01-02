@@ -28,6 +28,7 @@ TwitchClone::Application.routes.draw do
   get "/:username/videos", to: "videos#index", as: "videos"
   get "/:username/profile/edit", to: "users#edit", as: "edit_user"
   get "/:username/profile", to: "users#show", as: "user_show"
+  get "/:username/stream", to: "users#stream", as: "user_stream"
   get "/:username/edit", to: "pages#edit", as: "edit_page"
   get "/:username", to: "pages#show", as: "page_show"
   root to: "static_pages#index"

@@ -71,6 +71,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def stream
+    if !!current_user && current_user.username == params[:username]
+      render :stream
+    else
+      flash[:error] = "You do not have permission to be on that page"
+      redirect_to root_url
+    end
+  end
+
   def edit
     @user = current_user
     user = User.find_by_username(params[:username])

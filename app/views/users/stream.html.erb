@@ -1,0 +1,109 @@
+<div id="videos-container"></div>
+<button id="setup-new-broadcast" class="setup">Begin Streaming!</button>
+<script src="https://www.webrtc-experiment.com/firebase.js"></script>
+<script src="https://www.webrtc-experiment.com/RTCMultiConnection-v1.5.js"></script>
+<script id="stream-script">
+// Muaz Khan     - https://github.com/muaz-khan
+// MIT License   - https://www.webrtc-experiment.com/licence/
+// Documentation - https://github.com/muaz-khan/WebRTC-Experiment/tree/master/RTCMultiConnection
+
+/*
+In order to split this into 2 files, probably will have to...
+
+*/
+//alert(window.location);
+(function(){
+  channelName = window.location + "";
+  var idx = channelName.lastIndexOf("/");
+  channelName = channelName.substring(0,idx).replace( /\/|:|#|%|\.|\[|\]/g , '');
+})();
+//alert(channelName)
+
+var connection = new RTCMultiConnection(channelName);
+connection.session = {
+  audio: true,
+  video: true,
+  oneway: true
+};
+
+connection.onstream = function(e) {
+  e.mediaElement.width = 600;
+  videosContainer.insertBefore(e.mediaElement, videosContainer.firstChild);
+  scaleVideos();
+};
+
+connection.onstreamended = function(e) {
+  e.mediaElement.style.opacity = 0;
+  setTimeout(function() {
+      if (e.mediaElement.parentNode) {
+          e.mediaElement.parentNode.removeChild(e.mediaElement);
+      }
+      scaleVideos();
+  }, 1000);
+};
+
+var sessions = { };
+connection.onNewSession = function(session) {
+  if (sessions[session.sessionid]) return;
+  sessions[session.sessionid] = session;
+  console.log("spotted a session with: " + session.extra['session-name']);
+	//
+	var sessionid = session.sessionid
+  session = sessions[sessionid];
+  if (!session) throw 'No such session exists.';
+  connection.join(session);
+
+
+};
+
+var videosContainer = document.getElementById('videos-container') || document.body;
+var roomsList = document.getElementById('rooms-list');
+
+//this will not be included in the "view" page
+document.getElementById('setup-new-broadcast').onclick = function() {
+  this.disabled = true;
+  connection.extra = {
+      'session-name': 'Anonymous'
+  };
+
+  connection.open();
+};
+
+// setup signaling to search existing sessions
+connection.connect();
+
+function scaleVideos() {
+  var videos = document.querySelectorAll('video'),
+  length = videos.length, video;
+
+  var minus = 130;
+  var windowHeight = 700;
+  var windowWidth = 600;
+  var windowAspectRatio = windowWidth / windowHeight;
+  var videoAspectRatio = 4 / 3;
+  var blockAspectRatio;
+  var tempVideoWidth = 0;
+  var maxVideoWidth = 0;
+
+  for (var i = length; i > 0; i--) {
+      blockAspectRatio = i * videoAspectRatio / Math.ceil(length / i);
+      if (blockAspectRatio <= windowAspectRatio) {
+          tempVideoWidth = videoAspectRatio * windowHeight / Math.ceil(length / i);
+      } else {
+          tempVideoWidth = windowWidth / i;
+      }
+      if (tempVideoWidth > maxVideoWidth)
+          maxVideoWidth = tempVideoWidth;
+  }
+  for (var i = 0; i < length; i++) {
+      video = videos[i];
+      if (video)
+          video.width = maxVideoWidth - minus;
+  }
+}
+
+
+
+
+window.onresize = scaleVideos;
+</script>
