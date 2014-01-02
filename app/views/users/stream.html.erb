@@ -1,5 +1,6 @@
 <div id="videos-container"></div>
 <button id="setup-new-broadcast" class="setup">Begin Streaming!</button>
+<!-- <video muted autoplay></video> -->
 <script src="https://www.webrtc-experiment.com/firebase.js"></script>
 <script src="https://www.webrtc-experiment.com/RTCMultiConnection-v1.5.js"></script>
 <script id="stream-script">
@@ -7,10 +8,6 @@
 // MIT License   - https://www.webrtc-experiment.com/licence/
 // Documentation - https://github.com/muaz-khan/WebRTC-Experiment/tree/master/RTCMultiConnection
 
-/*
-In order to split this into 2 files, probably will have to...
-
-*/
 //alert(window.location);
 (function(){
   channelName = window.location + "";
@@ -27,6 +24,10 @@ connection.session = {
 };
 
 connection.onstream = function(e) {
+  myStreamObj = e;
+  // var videoElement = document.querySelector("video");
+//   videoElement.src = e.stream;
+//   videoElement.play();
   e.mediaElement.width = 600;
   videosContainer.insertBefore(e.mediaElement, videosContainer.firstChild);
   scaleVideos();

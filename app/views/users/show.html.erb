@@ -25,11 +25,13 @@
   </ul>
 
   <div class="profile-videos profile-active-div">
+    <%#= paginate @videos %>
     <% @videos.each do |video| %>
       <h2><%= video.title %></h2>
       <%= "<a href=#{video_url(video.id)} ><img src=#{h(video.thumbnail_url)} height=63 width=112></a>".html_safe %>
       <%= video.description %>
     <% end %>
+
   </div>
   <div class="profile-follows"></div>
   <div class="profile-followers"></div>
@@ -42,6 +44,52 @@
   </div>
 
 </div>
+<input type="hidden" class="page-num" value="<%= params[:page] || 1 %>">
+<input type="hidden" class="total-pages" value="<%= @videos.total_pages %>">
+
+<script id="kaminari-infinite-scroll">
+  $(document).ready(function () {
+    var requestingNextPage = false;
+
+    var distanceFromBottom = function () {
+      var doc = $(document)
+      return doc.height() - (window.innerHeight + doc.scrollTop())
+    }
+
+    $(window).scroll(function(event) {
+      if (distanceFromBottom() < 500 && !requestingNextPage) {
+        requestingNextPage = true;
+
+
+        var currentPage = parseInt($(".page-num").val());
+        var totalPages = parseInt($(".total-pages").val());
+
+        if (currentPage < totalPages) {
+          console.log("scrolling!");
+          $.ajax({
+            url: "<%= user_show_url(@user.username) %>",
+            dataType: "html",
+            data: {
+              "page": currentPage + 1
+            },
+            beforeSend: function () {
+              $("#ajax-loader").show();
+            },
+            success: function (data) {
+              // console.log(data)
+              $("#ajax-loader").hide();
+              $(".profile-videos").append(data);
+              $(".page-num").val(currentPage + 1);
+              $("nav").hide();
+              requestingNextPage = false;
+            }
+          });
+        }
+      };
+    });
+
+  });
+</script>
 <script>
 $(document).ready(function(){
   var rightSide = $(".temp-container").html();

@@ -1,0 +1,5 @@
+<% videos.each do |video| %>
+  <h2><%= video.title %></h2>
+  <%= "<a href=#{video_url(video.id)} ><img src=#{h(video.thumbnail_url)} height=63 width=112></a>".html_safe %>
+  <%= video.description %>
+<% end %>

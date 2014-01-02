@@ -58,14 +58,29 @@ class UsersController < ApplicationController
     end
   end
 
+  def grab_videos
+    @user = User.find_by_username(params[:username])
+    @videos = @user.videos.page(params[:page]).per(3)
+    render :show
+  end
+
   def show
     @user = User.find_by_username(params[:username])
     if !!@user
-      @follows = current_user.follows if !!current_user
-      @page = Page.find_by_user_id(@user.id)
-      @containers = Container.find_all_by_page_id(@page.id)
-      @videos = @user.videos
-      render :show
+
+      @videos = @user.videos.page(params[:page]).per(3)
+      if !request.xhr?
+        @follows = current_user.follows if !!current_user
+        @page = Page.find_by_user_id(@user.id)
+        @containers = Container.find_all_by_page_id(@page.id)
+        render :show
+      else
+        #fail
+        sleep(1.5)
+        videos_partial = render_to_string(partial: "videos", locals: {
+          videos: @videos})
+        render text: videos_partial
+      end
     else
       redirect_to not_found_url
     end
