@@ -73,6 +73,7 @@ class UsersController < ApplicationController
 
   def stream
     if !!current_user && current_user.username == params[:username]
+      @page = Page.find_by_user_id(current_user.id)
       render :stream
     else
       flash[:error] = "You do not have permission to be on that page"
