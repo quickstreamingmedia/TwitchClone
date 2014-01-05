@@ -73,16 +73,21 @@
 <div style="display:none" class="websockets-demo">
   <h2>Websockets Demo</h2>
   <p>
-    You are logged in as a test user.  Click
+    You are logged in as a test user.  Open the link
     <a href="<%= root_url %>user1/stream?demo=true#websockets" target="_blank">here</a>
-    to log in as another to test chat and streaming features!<br>
+    in another browser or an incognito window (chrome) to log in as another to
+    test chat and streaming features!<br>
     <a href="#" class="light-box-link pseudo-button">OK</a>
   </p>
 </div>
-<div style="display:none" class="login-demo">
-  <h2>One Moment Please</h2>
+<div style="display:none" class="ajax-demo">
+  <h2>Websockets Demo</h2>
   <p>
-    We are logging you in as a demo user!
+    You are logged in as a test user.  Open the link
+    <a href="<%= root_url %>user1/stream?demo=true#websockets" target="_blank">here</a>
+    in another browser or an incognito window (chrome) to log in as another to
+    test features built using AJAX!<br>
+    <a href="#" class="light-box-link pseudo-button">OK</a>
   </p>
 </div>
 <script type="application/json" id="bootstrapped_mods">
@@ -119,6 +124,17 @@ $(document).ready(function(){
       $body.append("<div class='dark-overlay'></div>");
       $body.append("<div class='light-box'></div>");
       $(".light-box").append($(".websockets-demo").html());
+
+    } else if (demo == "ajax"){
+      var $body = $("body");
+      $body.on("click","a.light-box-link",function(event){
+        event.preventDefault();
+        $(".dark-overlay").remove();
+        $(".light-box").remove();
+      })
+      $body.append("<div class='dark-overlay'></div>");
+      $body.append("<div class='light-box'></div>");
+      $(".light-box").append($(".ajax-demo").html());
 
     }
   }

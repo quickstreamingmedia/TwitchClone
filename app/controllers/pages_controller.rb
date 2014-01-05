@@ -17,6 +17,10 @@ class PagesController < ApplicationController
   end
 
   def edit
+    if params[:demo]
+      user = User.find_by_username("user3")
+      self.current_user=(user)
+    end
     @user = current_user
     user = User.find_by_username(params[:username])
     if !!@user && !!user && @user.username == user.username

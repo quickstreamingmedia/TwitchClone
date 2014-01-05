@@ -28,9 +28,48 @@
 
   <input type="submit" value="Update Page!">
 </form>
+<div style="display:none" class="temp-container">
+  <div class="side-containers">
+    <%= render "partials/containers" %>
+  </div>
 
+</div>
+<div style="display:none" class="crud-demo">
+  <h2>Create/Read/Update/Destroy Demo</h2>
+  <p>
+    You are logged in as a test user.  You can use this edit page to modify the contents
+    of this user's page! All CRUD actions can be done here!<br>
+    <a href="#" class="light-box-link pseudo-button">OK</a>
+  </p>
+</div>
+<script id="page-edit-demo">
+$(document).ready(function(){
+  var fullUrl = window.location + "";
+  var idx = fullUrl.lastIndexOf("#");
+  if (idx >= 0){
+    var demo = fullUrl.substring(idx+1);
+    if (demo == "crud"){
+      var $body = $("body");
+      $body.on("click","a.light-box-link",function(event){
+        event.preventDefault();
+        $(".dark-overlay").remove();
+        $(".light-box").remove();
+      })
+      $body.append("<div class='dark-overlay'></div>");
+      $body.append("<div class='light-box'></div>");
+      $(".light-box").append($(".crud-demo").html());
+
+    }
+  }
+
+});
+</script>
 <script>
   $(document).ready(function(){
+    var rightSide = $(".temp-container").html();
+    $(".2-wrapper").html(rightSide);
+    $(".right-sidebar-buttons-wrapper a.a-other").text("Info");
+
     $(".single-container").on("click", "button", function(event){
       event.preventDefault();
       var $button = $(event.currentTarget);
