@@ -35,6 +35,11 @@
     <% end %>
   </header>
     <div id="videos-container"></div>
+    <link href="//vjs.zencdn.net/4.2/video-js.css" rel="stylesheet">
+    <script src="//vjs.zencdn.net/4.2/video.js"></script>
+
+    <video id="main-video" class="video-js vjs-default-skin" muted autoplay poster="http://cdn.destructoid.com//ul/251871-NewYoshisIsland.jpg" width="800" height="450"></video>
+
     <%#= render "partials/embed_live", user: @user.username %>
     <div class="sub-video-buttons-wrapper group">
       <div class="sub-video-buttons-left">
@@ -164,9 +169,13 @@ connection.session = {
 };
 
 connection.onstream = function(e) {
-  e.mediaElement.width = 600;
-  videosContainer.insertBefore(e.mediaElement, videosContainer.firstChild);
-  scaleVideos();
+  myStreamObj = e;
+  var videoElement = document.querySelector("video");
+  videoElement.src = e.stream;
+  videoElement.play();
+  // e.mediaElement.width = 600;
+  // videosContainer.insertBefore(e.mediaElement, videosContainer.firstChild);
+  // scaleVideos();
 };
 
 connection.onstreamended = function(e) {
