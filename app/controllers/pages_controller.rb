@@ -1,6 +1,10 @@
 class PagesController < ApplicationController
 
   def show
+    if params[:demo]
+      user = User.find_by_username("user3")
+      self.current_user=(user)
+    end
     @user = User.find_by_username(params[:username])
     if !!@user
       @follows = current_user.follows if !!current_user

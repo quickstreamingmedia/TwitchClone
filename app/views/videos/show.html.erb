@@ -22,6 +22,56 @@ THIS IS WHERE THE VIDEO WILL GO AGAIN
     <%= video.description %>
   </div>
 <% end %>
+<div style="display:none" class="recursion-demo">
+  <h2>Recursion Demo</h2>
+  <p>
+    The expandable/collapsible comments here are rendered with recursive calls
+    to the same JST template!<br>
+    <a href="#" class="light-box-link pseudo-button">OK</a>
+  </p>
+</div>
+<div style="display:none" class="backbone-demo">
+  <h2>Backbone Demo</h2>
+  <p>
+    The follows list on the side is sortable (try sorting users and then refreshing)!
+    You can also make comments and delete your own comments here, and it all uses backbone!<br>
+    <a href="#" class="light-box-link pseudo-button">OK</a>
+  </p>
+</div>
+<script id="video-show-demo">
+$(document).ready(function(){
+  var fullUrl = window.location + "";
+  var idx = fullUrl.lastIndexOf("#");
+  if (idx >= 0){
+    var demo = fullUrl.substring(idx+1);
+    if (demo == "recursion"){
+      var $body = $("body");
+      $body.on("click","a.light-box-link",function(event){
+        event.preventDefault();
+        $(".dark-overlay").remove();
+        $(".light-box").remove();
+      })
+      $body.append("<div class='dark-overlay'></div>");
+      $body.append("<div class='light-box'></div>");
+      $(".light-box").append($(".recursion-demo").html());
+
+
+      //run jQuery code!
+    } else if (demo == "backbone"){
+      var $body = $("body");
+      $body.on("click","a.light-box-link",function(event){
+        event.preventDefault();
+        $(".dark-overlay").remove();
+        $(".light-box").remove();
+      })
+      $body.append("<div class='dark-overlay'></div>");
+      $body.append("<div class='light-box'></div>");
+      $(".light-box").append($(".backbone-demo").html());
+    }
+  }
+
+});
+</script>
 <script type="application/json" id="bootstrapped_comments">
 {<% comments = @video.comments %>
   "COMMENTS": <%= comments.to_json.html_safe %>,

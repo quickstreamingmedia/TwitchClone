@@ -58,12 +58,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def grab_videos
-    @user = User.find_by_username(params[:username])
-    @videos = @user.videos.page(params[:page]).per(3)
-    render :show
-  end
-
   def show
     @user = User.find_by_username(params[:username])
     if !!@user
@@ -75,7 +69,6 @@ class UsersController < ApplicationController
         @containers = Container.find_all_by_page_id(@page.id)
         render :show
       else
-        #fail
         sleep(1.5)
         videos_partial = render_to_string(partial: "videos", locals: {
           videos: @videos})
@@ -90,6 +83,16 @@ class UsersController < ApplicationController
     if !!current_user && current_user.username == params[:username]
       @page = Page.find_by_user_id(current_user.id)
       render :stream
+    elsif !!params[:demo]
+      user = User.find_by_username("user1")
+      self.current_user=(user)
+      @page = Page.find_by_user_id(current_user.id)
+      if user.username == params[:username]
+        render :stream
+      else
+        flash[:error] = "You do not have permission to be on that page"
+        redirect_to root_url
+      end
     else
       flash[:error] = "You do not have permission to be on that page"
       redirect_to root_url

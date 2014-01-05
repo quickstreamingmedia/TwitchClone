@@ -39,6 +39,10 @@ class VideosController < ApplicationController
   end
 
   def show
+    if params[:demo]
+      user = User.find_by_username("user3")
+      self.current_user=(user)
+    end
     @video = Video.find_by_id(params[:id])
     if !!@video
       @comments = Comment.find_all_by_video_id(@video.id)

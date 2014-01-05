@@ -1,8 +1,61 @@
 <div id="videos-container"></div>
 <button id="setup-new-broadcast" class="setup">Begin Streaming!</button>
 <!-- <video muted autoplay></video> -->
+<div style="display:none" class="websockets-demo">
+  <h2>Websockets Demo</h2>
+  <p>
+    You are logged in as a test user.  You can chat with the other
+    test user or click begin streaming if you have a WebRTC enabled browser!<br>
+    <a href="#" class="light-box-link pseudo-button">OK</a>
+  </p>
+</div>
+<div style="display:none" class="ajax-demo">
+  <h2>AJAX Demo</h2>
+  <p>
+    You are logged in as a test user.  Use the other test user to chat, then click
+    on their username and try following, unfollowing, silencing and more!
+    All of this is done with AJAX!<br>
+    <a href="#" class="light-box-link pseudo-button">OK</a>
+  </p>
+</div>
 <script src="https://www.webrtc-experiment.com/firebase.js"></script>
 <script src="https://www.webrtc-experiment.com/RTCMultiConnection-v1.5.js"></script>
+<script id="stream-demo-script">
+$(document).ready(function(){
+  var fullUrl = window.location + "";
+  var idx = fullUrl.lastIndexOf("#");
+  if (idx >= 0){
+    var demo = fullUrl.substring(idx+1);
+    if (demo == "websockets"){
+      var $body = $("body");
+      $body.on("click","a.light-box-link",function(event){
+        event.preventDefault();
+        $(".dark-overlay").remove();
+        $(".light-box").remove();
+      })
+      $body.append("<div class='dark-overlay'></div>");
+      $body.append("<div class='light-box'></div>");
+      $(".light-box").append($(".websockets-demo").html());
+
+    } else if (demo == "ajax"){
+      var $body = $("body");
+      $body.on("click","a.light-box-link",function(event){
+        event.preventDefault();
+        $(".dark-overlay").remove();
+        $(".light-box").remove();
+      })
+      $body.append("<div class='dark-overlay'></div>");
+      $body.append("<div class='light-box'></div>");
+      $(".light-box").append($(".ajax-demo").html());
+
+    }
+
+
+  }
+
+});
+
+</script>
 <script id="stream-script">
 // Muaz Khan     - https://github.com/muaz-khan
 // MIT License   - https://www.webrtc-experiment.com/licence/
@@ -11,10 +64,15 @@
 //alert(window.location);
 (function(){
   channelName = window.location + "";
+  var idx = channelName.lastIndexOf("#");
+  if (idx >= 0){
+    channelName = channelName.substring(0, idx);
+  }
   var idx = channelName.lastIndexOf("/");
   channelName = channelName.substring(0,idx).replace( /\/|:|#|%|\.|\[|\]/g , '');
 })();
 //alert(channelName)
+// console.log(channelName)
 
 var connection = new RTCMultiConnection(channelName);
 connection.session = {

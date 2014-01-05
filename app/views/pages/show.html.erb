@@ -60,6 +60,31 @@
     <%#= link_to("Edit", edit_page_url(@user.username)) if @user.username == current_user.username %>
   <% end %>
 </div>
+<div style="display:none" class="css-demo">
+  <h2>CSS Demo</h2>
+  <p>
+    The hide buttons at the top left and right of the page can be used to
+    hide/show the sidebars.  Watch as the background image and columns of content
+    (below the video element) respond.
+    Also try resizing the window's width!<br>
+    <a href="#" class="light-box-link pseudo-button">OK</a>
+  </p>
+</div>
+<div style="display:none" class="websockets-demo">
+  <h2>Websockets Demo</h2>
+  <p>
+    You are logged in as a test user.  Click
+    <a href="<%= root_url %>user1/stream?demo=true#websockets" target="_blank">here</a>
+    to log in as another to test chat and streaming features!<br>
+    <a href="#" class="light-box-link pseudo-button">OK</a>
+  </p>
+</div>
+<div style="display:none" class="login-demo">
+  <h2>One Moment Please</h2>
+  <p>
+    We are logging you in as a demo user!
+  </p>
+</div>
 <script type="application/json" id="bootstrapped_mods">
 {
   "MODERATORS": <%= @page.moderators.map{|x| x.id }.to_json.html_safe %>
@@ -67,13 +92,55 @@
 </script>
 <script src="https://www.webrtc-experiment.com/firebase.js"></script>
 <script src="https://www.webrtc-experiment.com/RTCMultiConnection-v1.5.js"></script>
+<script id="page-show-demo">
+$(document).ready(function(){
+  var fullUrl = window.location + "";
+  var idx = fullUrl.lastIndexOf("#");
+  if (idx >= 0){
+    var demo = fullUrl.substring(idx+1);
+    if (demo == "css"){
+      var $body = $("body");
+      $body.on("click","a.light-box-link",function(event){
+        event.preventDefault();
+        $(".dark-overlay").remove();
+        $(".light-box").remove();
+      })
+      $body.append("<div class='dark-overlay'></div>");
+      $body.append("<div class='light-box'></div>");
+      $(".light-box").append($(".css-demo").html());
+
+    } else if (demo == "websockets"){
+      var $body = $("body");
+      $body.on("click","a.light-box-link",function(event){
+        event.preventDefault();
+        $(".dark-overlay").remove();
+        $(".light-box").remove();
+      })
+      $body.append("<div class='dark-overlay'></div>");
+      $body.append("<div class='light-box'></div>");
+      $(".light-box").append($(".websockets-demo").html());
+
+    }
+  }
+
+});
+</script>
 <script id="stream-code">
 // Muaz Khan     - https://github.com/muaz-khan
 // MIT License   - https://www.webrtc-experiment.com/licence/
 // Documentation - https://github.com/muaz-khan/WebRTC-Experiment/tree/master/RTCMultiConnection
 
+(function(){
+  channelName = window.location + "";
+  var idx = channelName.lastIndexOf("#");
+  if (idx >= 0){
+    channelName = channelName.substring(0, idx);
+  }
+  channelName = channelName.replace( /\/|:|#|%|\.|\[|\]/g , '');
+})();
 
-var connection = new RTCMultiConnection();
+
+var connection = new RTCMultiConnection(channelName);
 connection.session = {
   audio: true,
   video: true,
@@ -207,8 +274,7 @@ $(document).ready(function(){
     var clickedUser = $div.attr("data-name");
     var clickedId = $div.attr("data-id");
     //create div to show username, and button to follow, link to channel and link to profile
-    //div can have an id so that there's only one at a time? just change html
-    //class toggle for visible/invisible?
+    //class toggle for visible/invisible
     var $show = $("#chat-user-show");
     $show.addClass("chat-show-yes");
     $show.removeClass("chat-show-no");
