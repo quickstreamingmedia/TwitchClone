@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require underscore
+//= require firebase
+//= require RTCMultiConnection
 //= require backbone
 //= require twitch_clone
 //= require_tree ../templates

@@ -114,8 +114,7 @@
   "MODERATORS": <%= @page.moderators.map{|x| x.id }.to_json.html_safe %>
 }
 </script>
-<script src="https://www.webrtc-experiment.com/firebase.js"></script>
-<script src="https://www.webrtc-experiment.com/RTCMultiConnection-v1.5.js"></script>
+
 <script id="page-show-demo">
 $(document).ready(function(){
   var fullUrl = window.location + "";
