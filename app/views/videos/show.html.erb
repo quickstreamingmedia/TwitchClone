@@ -6,22 +6,20 @@
 
 <h1><%= @video.title %></h1>
 THIS IS WHERE THE VIDEO WILL GO AGAIN
-<%#= render 'partials/embed_static' %>
-<hr>
-<%#= @test %>
-<hr>
-<%#= render 'partials/new_comment', parent_id: nil, button_text: "Comment" %>
-<%#= render '/partials/comments', key: nil %>
+
+
 
 <div class="comments-container"></div>
 <hr>
-<% @videos.each do |video| %>
-  <div class="<%= (video.id == @video.id) ? "current-video" : "" %>">
-    <h2><%= video.title %></h2>
-    <%= "<a href=#{video_url(video.id)} ><img src=#{h(video.thumbnail_url)} height=63 width=112></a>".html_safe %>
-    <%= video.description %>
-  </div>
-<% end %>
+<div class="all-videos">
+  <% @videos.each do |video| %>
+    <div class="<%= (video.id == @video.id) ? "current-video" : "" %>">
+      <h2><%= video.title %></h2>
+      <%= "<a href=#{video_url(video.id)} ><img src=#{h(video.thumbnail_url)} height=63 width=112></a>".html_safe %>
+      <%= video.description %>
+    </div>
+  <% end %>
+</div>
 <div style="display:none" class="recursion-demo">
   <h2>Recursion Demo</h2>
   <p>

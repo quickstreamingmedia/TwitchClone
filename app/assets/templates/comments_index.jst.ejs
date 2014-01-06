@@ -1,7 +1,7 @@
 <% if (check_id === null){ %>
-  <div class="newCommentBox">
-    <textarea class="taNew" name="body" placeholder="write your comment here" cols=80 rows=4></textarea>
-    <button class="newCommentButton">Make Comment!</button>
+  <div class="newCommentBox group">
+    <textarea class="taNew" name="body" placeholder="write your comment here" cols=60 rows=4></textarea>
+    <button class="newCommentButton pseudo-button">Make Comment!</button>
   </div>
 <% } %>
 <% roots = comments.where({parent_id: check_id}) %>
@@ -14,7 +14,7 @@
     <% if (comments_by_parent_id[comment.id]){ %>
       <a class="exp-col" href="#"><%= aText %></a>
     <% } else { %>
-      <p>.</p>
+      <p>&nbsp;.</p>
     <% } %>
     <div class="comment-img">
       <% if (moderators.indexOf(comment.escape("user_id")*1) >= 0){ %>
@@ -39,7 +39,7 @@
     </div>
     <div class="replyBox replyBox-<%= comment.id %>">
       <textarea class="ta-<%= comment.id %>" name="body" placeholder="write your reply here" cols=80 rows=4></textarea>
-      <button class="replyButton" data-id="<%= comment.id %>">Reply!</button>
+      <button class="replyButton pseudo-button" data-id="<%= comment.id %>">Reply!</button>
     </div>
   <% if (comments_by_parent_id[comment.id]){ %>
     <%= JST["comments_index"]({ comments: comments, check_id: comment.id, comments_by_parent_id: comments_by_parent_id, expandedComments: expandedComments, moderators: moderators }) %>

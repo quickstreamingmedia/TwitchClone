@@ -66,6 +66,8 @@ class UsersController < ApplicationController
       if !request.xhr?
         @follows = current_user.follows if !!current_user
         @page = Page.find_by_user_id(@user.id)
+        @profile_user_follows = @user.follows
+        @profile_user_followers = @user.followers
         @containers = Container.find_all_by_page_id(@page.id)
         render :show
       else

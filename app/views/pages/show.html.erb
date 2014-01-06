@@ -34,11 +34,13 @@
       <h2 class="page-show-title"><%= h(@user.username) %>'s Show Page</h2>
     <% end %>
   </header>
-    <div id="videos-container"></div>
+    <div id="videos-container">
+      <video id="main-video" class="video-js vjs-default-skin" muted autoplay poster="http://cdn.destructoid.com//ul/251871-NewYoshisIsland.jpg" width="800" height="450">
+      </video>
+    </div>
     <link href="//vjs.zencdn.net/4.2/video-js.css" rel="stylesheet">
     <script src="//vjs.zencdn.net/4.2/video.js"></script>
 
-    <video id="main-video" class="video-js vjs-default-skin" muted autoplay poster="http://cdn.destructoid.com//ul/251871-NewYoshisIsland.jpg" width="800" height="450"></video>
 
     <%#= render "partials/embed_live", user: @user.username %>
     <div class="sub-video-buttons-wrapper group">
@@ -65,6 +67,18 @@
     <%#= link_to("Edit", edit_page_url(@user.username)) if @user.username == current_user.username %>
   <% end %>
 </div>
+
+<div style="display:none" class="temp-container">
+  <div class="side-containers">
+    <% @videos.each do |video| %>
+      <h2><%= video.title %></h2>
+      <%= "<a href=#{video_url(video.id)} ><img src=#{h(video.thumbnail_url)} height=63 width=112></a>".html_safe %>
+      <%= video.description %>
+    <% end %>
+  </div>
+
+</div>
+
 <div style="display:none" class="css-demo">
   <h2>CSS Demo</h2>
   <p>
@@ -171,7 +185,7 @@ connection.session = {
 connection.onstream = function(e) {
   myStreamObj = e;
   var videoElement = document.querySelector("video");
-  videoElement.src = e.stream;
+  videoElement.src = e.blobURL;
   videoElement.play();
   // e.mediaElement.width = 600;
   // videosContainer.insertBefore(e.mediaElement, videosContainer.firstChild);
@@ -184,7 +198,7 @@ connection.onstreamended = function(e) {
       if (e.mediaElement.parentNode) {
           e.mediaElement.parentNode.removeChild(e.mediaElement);
       }
-      scaleVideos();
+      // scaleVideos();
   }, 1000);
 };
 
@@ -242,7 +256,7 @@ function scaleVideos() {
 
 
 
-window.onresize = scaleVideos;
+// window.onresize = scaleVideos;
 </script>
 <script>
 
@@ -286,6 +300,8 @@ $(document).ready(function(){
   }
 
   $(".right-sidebar-buttons-wrapper a.a-other").text("Videos");
+  var rightSide = $(".temp-container").html();
+  $(".2-wrapper").html(rightSide);
 
   $(".chat-text-box").on("click","button",function(event){
     chatText(event);

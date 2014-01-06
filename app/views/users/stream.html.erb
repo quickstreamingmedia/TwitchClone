@@ -88,11 +88,12 @@ connection.session = {
 
 connection.onstream = function(e) {
   myStreamObj = e;
-  var videoElement = document.querySelector("video");
-  videoElement.src = e.stream;
+  videoElement = document.querySelector("video");
+  videoElement.src = e.blobURL;
   videoElement.play();
   // e.mediaElement.width = 600;
   // videosContainer.insertBefore(e.mediaElement, videosContainer.firstChild);
+  newVid = e.mediaElement;
   // scaleVideos();
 };
 

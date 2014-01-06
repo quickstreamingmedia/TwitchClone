@@ -1,6 +1,6 @@
 
 <% imgSrc = h(@user.page.banner_url) %>
-<% imgSrc = (!!imgSrc && imgSrc != "") ? imgSrc : "http://silencenogood.net/wordpress/wp-content/uploads/2011/11/Nintendo-banner.jpg" %>
+<% imgSrc = (!!imgSrc && imgSrc != "") ? imgSrc : "http://i.imgur.com/8cVHuhq.jpg?1" %>
 <div class="user-show-bg">
 
   <span class="rel">
@@ -33,8 +33,34 @@
     <% end %>
 
   </div>
-  <div class="profile-follows"></div>
-  <div class="profile-followers"></div>
+  <div class="profile-follows">
+    <% @profile_user_follows.each do |follow| %>
+    <section>
+      <a class="profile-links" href="<%= user_show_url(follow.username) %>">
+        <img src="<%= follow.page.logo %>" width="100" height="100" >
+      </a>
+      <div class="profile-usernames">
+
+        <%= follow.username %>
+      </div>
+      <%#= follow.username %>
+    </section>
+    <% end %>
+  </div>
+  <div class="profile-followers">
+    <% @profile_user_followers.each do |follow| %>
+    <section>
+      <a class="profile-links" href="<%= user_show_url(follow.username) %>">
+        <img src="<%= follow.page.logo %>" width="100" height="100" >
+      </a>
+      <div class="profile-usernames">
+
+        <%= follow.username %>
+      </div>
+      <%#= follow.username %>
+    </section>
+    <% end %>
+  </div>
 </div>
 
 
@@ -125,6 +151,21 @@ $(document).ready(function(){
 </script>
 <script>
 $(document).ready(function(){
+
+  function bannerResize(){
+    var width = $(window).width();
+    $(".user-show-bg img").css("width", width);
+  }
+
+  $(window).resize(bannerResize);
+
+  bannerResize();
+
+  $(".side-hider").on("click","a",function(event){
+    event.preventDefault();
+    bannerResize();
+  });
+
   var rightSide = $(".temp-container").html();
   $(".2-wrapper").html(rightSide);
   $(".right-sidebar-buttons-wrapper a.a-other").text("Info");

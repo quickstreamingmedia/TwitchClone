@@ -10,6 +10,7 @@ class PagesController < ApplicationController
       @follows = current_user.follows if !!current_user
       @page = Page.find_by_user_id(@user.id)
       @containers = Container.find_all_by_page_id(@page.id)
+      @videos = @user.videos
       render :show
     else
       redirect_to not_found_url
