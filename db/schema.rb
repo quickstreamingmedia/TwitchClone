@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131219160527) do
+ActiveRecord::Schema.define(:version => 20140107144034) do
 
   create_table "chat_icons", :force => true do |t|
     t.integer  "page_id"
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(:version => 20131219160527) do
     t.string   "banner_url"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.string   "video_bg_url"
   end
 
   create_table "sessions", :force => true do |t|
@@ -100,6 +101,16 @@ ActiveRecord::Schema.define(:version => 20131219160527) do
 
   add_index "sessions", ["session_token"], :name => "index_sessions_on_session_token"
   add_index "sessions", ["user_id"], :name => "index_sessions_on_user_id"
+
+  create_table "streams", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "game_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "streams", ["game_id"], :name => "index_streams_on_game_id"
+  add_index "streams", ["user_id"], :name => "index_streams_on_user_id"
 
   create_table "subscriptions", :force => true do |t|
     t.integer  "page_id"

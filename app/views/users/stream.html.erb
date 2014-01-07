@@ -1,11 +1,14 @@
 <div id="videos-container"></div>
-<button id="setup-new-broadcast" class="setup">Begin Streaming!</button>
+
 <!-- <video muted autoplay></video> -->
 <link href="//vjs.zencdn.net/4.2/video-js.css" rel="stylesheet">
 <script src="//vjs.zencdn.net/4.2/video.js"></script>
+<div class="stream-video-container">
+  <video id="main-video" class="video-js vjs-default-skin" muted autoplay poster="http://cdn.destructoid.com//ul/251871-NewYoshisIsland.jpg" width="400" height="225">
 
-<video id="main-video" class="video-js vjs-default-skin" muted autoplay poster="http://cdn.destructoid.com//ul/251871-NewYoshisIsland.jpg" width="800" height="450"></video>
-
+  </video>
+</div>
+<button id="setup-new-broadcast" class="setup pseudo-button">Begin Streaming!</button>
 <div style="display:none" class="websockets-demo">
   <h2>Websockets Demo</h2>
   <p>
