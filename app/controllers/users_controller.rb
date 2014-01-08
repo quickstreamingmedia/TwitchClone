@@ -101,6 +101,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def new_stream
+    @stream = Stream.find_by_user_id(current_user.id) || Stream.new(user_id: current_user.id)
+    @stream.update_attribute(:game_id, params[:game_id])
+    @page = current_user.page
+    @page.update_attribute(:stream_title ,params[:stream_title])
+    head :created
+  end
+
   def edit
     @user = current_user
     user = User.find_by_username(params[:username])

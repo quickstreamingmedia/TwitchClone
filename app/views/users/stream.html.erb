@@ -3,12 +3,25 @@
 <!-- <video muted autoplay></video> -->
 <link href="//vjs.zencdn.net/4.2/video-js.css" rel="stylesheet">
 <script src="//vjs.zencdn.net/4.2/video.js"></script>
-<div class="stream-video-container">
-  <video id="main-video" class="video-js vjs-default-skin" muted autoplay poster="http://cdn.destructoid.com//ul/251871-NewYoshisIsland.jpg" width="400" height="225">
+<div class="stream-wrapper">
+  <div class="group">
+    <div class="stream-video-container">
+      <video id="main-video" class="video-js vjs-default-skin" muted autoplay poster="http://cdn.destructoid.com//ul/251871-NewYoshisIsland.jpg" width="400" height="225">
 
-  </video>
+      </video>
+    </div>
+    <div class="stream-block">
+
+      <br>
+      Stream Title:
+      <input type="text" class="stream-title-text" name="stream_title" value="<%= @page.stream_title %>">
+      <br>
+      <button class="update-stream pseudo-button">Update Stream!</button>
+    </div>
+  </div>
+  <button id="setup-new-broadcast" class="setup pseudo-button">Begin Streaming!</button>
 </div>
-<button id="setup-new-broadcast" class="setup pseudo-button">Begin Streaming!</button>
+
 <div style="display:none" class="websockets-demo">
   <h2>Websockets Demo</h2>
   <p>
@@ -104,7 +117,7 @@ connection.onstreamended = function(e) {
       if (e.mediaElement.parentNode) {
           e.mediaElement.parentNode.removeChild(e.mediaElement);
       }
-      scaleVideos();
+      // scaleVideos();
   }, 1000);
 };
 
@@ -171,7 +184,7 @@ function scaleVideos() {
 
 
 
-window.onresize = scaleVideos;
+// window.onresize = scaleVideos;
 </script>
 <script type="application/json" id="bootstrapped_mods">
 {
@@ -310,9 +323,6 @@ window.onresize = scaleVideos;
       })
     };
 
-
-
-
     var path = window.location.pathname;
     path = path.substring(1);
     var idx = path.lastIndexOf("/");
@@ -328,6 +338,17 @@ window.onresize = scaleVideos;
     });
     channel.bind('silence', function(data){
       $(".chat-"+data).html("&lt;message deleted&gt;")
+    });
+
+    $(".update-stream").on("click",function(event){
+      event.preventDefault();
+      var streamTitle = $(".stream-title-text").val();
+      console.log(streamTitle)
+      $.ajax({
+        type:"POST",
+        url:"/stream",
+        data:{stream_title:streamTitle,game_id:null}
+      });
     });
   })
 </script>

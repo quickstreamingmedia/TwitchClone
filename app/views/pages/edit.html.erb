@@ -1,10 +1,10 @@
-<form action="<%= page_url(@page) %>" method="POST">
+<form action="<%= page_url(@page) %>" method="POST" class="page-edit-form">
   <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
   <input type="hidden" name="_method" value="PUT">
   Logo Image Url:<input type="text" name="page[logo_url]" value="<%= @page.logo_url %>"><br>
   Background Image Url:<input type="text" name="page[background_url]" value="<%= @page.background_url %>"><br>
-  Banner Image Url:<input type="text" name="page[banner_url]" value="<%= @page.banner_url %>"><br>
-
+  Profile Banner Image Url:<input type="text" name="page[banner_url]" value="<%= @page.banner_url %>"><br>
+  Offline Video Background Url:<input type="text" name="page[video_bg_url]" value="<%= @page.banner_url %>">
   <br><br><br>
 
   <div class="editable-containers">

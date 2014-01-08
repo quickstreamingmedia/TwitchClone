@@ -1,25 +1,38 @@
-<style>
-.current-video{
-  background-color:#ffff00;
-}
-</style>
 
-<h1><%= @video.title %></h1>
-THIS IS WHERE THE VIDEO WILL GO AGAIN
-<hr>
+<img class="page-show-bg"></img>
+<div class="gradient"></div>
+
+<div class="not-bg">
+  <h1><%= @video.title %></h1>
+    <div class="static-video">
+      <%= render "partials/embed_static" %>
+    </div>
+  <hr>
 
 
-<div class="comments-container"></div>
-<hr>
-<div class="all-videos">
-  <% @videos.each do |video| %>
-    <div class="<%= (video.id == @video.id) ? "current-video" : "" %>">
+  <div class="comments-container"></div>
+  <hr>
+
+  <section class="group container-section">
+    <div class="container-wrapper">
+      <%= render "partials/containers" %>
+    </div>
+  </section>
+</div>
+
+<div style="display:none" class="temp-container">
+  <div class="side-containers">
+    <% @videos.each do |video| %>
       <h2><%= video.title %></h2>
       <%= "<a href=#{video_url(video.id)} ><img src=#{h(video.thumbnail_url)} height=63 width=112></a>".html_safe %>
       <%= video.description %>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
+
 </div>
+
+
+
 <div style="display:none" class="recursion-demo">
   <h2>Recursion Demo</h2>
   <p>
@@ -99,6 +112,14 @@ $(document).ready(function(){
 </script>
 <script>
 $(document).ready(function(){
+
+  var rightSide = $(".temp-container").html();
+  $(".2-wrapper").html(rightSide);
+  $(".right-sidebar-buttons-wrapper a.a-other").text("Videos");
+  // $(".right-sidebar-buttons").css("display","none");
+  // $(".1-wrapper").css("display","none");
+  // $(".2-wrapper").css("display","block");
+
   //get some bootstrapped data!!
   var data = JSON.parse($("#bootstrapped_comments").html());
   videoId = <%= @video.id %>
@@ -117,5 +138,22 @@ $(document).ready(function(){
     moderators: data["MODERATORS"]
   });
   TwitchClone.Views.commentsIndex.render();
+
+  var $canvas = $(".page-show-bg");
+  var $gradient = $(".gradient");
+
+  <% if !!@page.background_url && @page.background_url != "" %>
+    //$canvas.attr("image","<%= @page.background_url %>");
+    $canvas.css("width","100%");
+    $canvas.css("height","auto");
+    $canvas.css("top",-10);
+    $gradient.css("width",$canvas.css("width"));
+    $gradient.css("height","100%");
+    //$canvas.css("background-image","url('<%= @page.background_url %>')");
+    $canvas.attr("src",'<%= @page.background_url %>');
+    // $canvas.css("background-repeat","no-repeat");
+//     $canvas.css("background-position","50% 0%");
+    $canvas.css("opacity",0.5);
+  <% end %>
 });
 </script>

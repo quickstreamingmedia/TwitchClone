@@ -23,12 +23,17 @@ TwitchClone::Application.routes.draw do
   post "/chat", to: "chats#chat", as: "chat"
   post "/chat_silence", to: "chats#silence", as: "silence"
   post "/chat_watch", to: "chats#start_watching", as: "watch"
+
+  post "/stream", to: "users#new_stream", as: "user_new_stream"
+
   delete "/chat_leave/:page_name", to: "chats#stop_watching", as: "leave"
+
   get "/404", to: "static_pages#not_found", as: "not_found"
   #get "/:username/videos", to: "videos#index", as: "videos"
   get "/:username/profile/edit", to: "users#edit", as: "edit_user"
   get "/:username/profile", to: "users#show", as: "user_show"
   get "/:username/stream", to: "users#stream", as: "user_stream"
+
   get "/:username/edit", to: "pages#edit", as: "edit_page"
   get "/:username", to: "pages#show", as: "page_show"
   root to: "static_pages#index"

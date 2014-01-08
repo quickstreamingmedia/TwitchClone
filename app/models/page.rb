@@ -1,5 +1,5 @@
 class Page < ActiveRecord::Base
-  attr_accessible :user_id, :logo_url, :stream_title, :background_url, :banner_url
+  attr_accessible :user_id, :logo_url, :stream_title, :background_url, :banner_url, :video_bg_url
   validates :user_id, presence: true
   validates :user_id, uniqueness: true
 

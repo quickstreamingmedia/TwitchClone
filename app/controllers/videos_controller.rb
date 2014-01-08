@@ -48,8 +48,11 @@ class VideosController < ApplicationController
       @comments = Comment.find_all_by_video_id(@video.id)
       @comments_by_parent_id = @video.comments_by_parent_id
       @user = User.find(@video.user_id)
+      @page = @user.page
       @videos = @user.videos
       @test = self.update_videos
+
+      @containers = @user.page.containers
 
       @videos = @user.videos
       render :show

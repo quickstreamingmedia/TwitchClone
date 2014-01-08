@@ -35,14 +35,17 @@
     <% end %>
   </header>
     <div id="videos-container">
-      <video id="main-video" class="video-js vjs-default-skin" muted autoplay poster="http://cdn.destructoid.com//ul/251871-NewYoshisIsland.jpg" width="800" height="450">
+      <% if !!@page.video_bg_url && @page.video_bg_url != "" %>
+        <% video_poster_src = @page.video_bg_url %>
+      <% else %>
+        <% video_poster_src = "http://cdn.destructoid.com//ul/251871-NewYoshisIsland.jpg" %>
+      <% end %>
+      <video id="main-video" class="video-js vjs-default-skin" muted autoplay poster="<%= video_poster_src %>" width="800" height="450">
       </video>
     </div>
     <link href="//vjs.zencdn.net/4.2/video-js.css" rel="stylesheet">
     <script src="//vjs.zencdn.net/4.2/video.js"></script>
 
-
-    <%#= render "partials/embed_live", user: @user.username %>
     <div class="sub-video-buttons-wrapper group">
       <div class="sub-video-buttons-left">
         <div class="follow-button-container"></div>
