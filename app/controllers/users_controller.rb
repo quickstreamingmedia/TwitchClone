@@ -101,6 +101,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def user_demo
+    user = User.find_by_username("user1")
+    self.current_user=(user)
+    redirect_to @_env["HTTP_REFERER"]
+  end
+
   def new_stream
     @stream = Stream.find_by_user_id(current_user.id) || Stream.new(user_id: current_user.id)
     @stream.update_attribute(:game_id, params[:game_id])

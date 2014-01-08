@@ -30,6 +30,8 @@ TwitchClone::Application.routes.draw do
 
   get "/404", to: "static_pages#not_found", as: "not_found"
   #get "/:username/videos", to: "videos#index", as: "videos"
+  get "/user_demo", to: "users#user_demo", as: "user_demo"
+
   get "/:username/profile/edit", to: "users#edit", as: "edit_user"
   get "/:username/profile", to: "users#show", as: "user_show"
   get "/:username/stream", to: "users#stream", as: "user_stream"

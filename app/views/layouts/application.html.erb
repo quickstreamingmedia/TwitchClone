@@ -92,6 +92,11 @@
       var data = JSON.parse($("#bootstrapped_current_user_json").html());
       var CURRENT_USER_ID = data["CURRENT_USER_ID"];
 
+      $(".demo-button").on("click", function(event){
+        event.preventDefault();
+        window.location = "<%= root_url %>user_demo"
+      })
+
       var $gradient = $(".gradient");
       var resizeFun = function() {
         var width = $(".main-content").width();
@@ -124,7 +129,6 @@
       $(".side-hider").on("click","a",function(event){
         event.preventDefault();
         resizeFun();
-        //refactor using addClass and removeClass!!!!!
         var $canvas = $(".page-show-bg");
         $canvas.css("width","100%");
         $canvas.css("height","auto");
