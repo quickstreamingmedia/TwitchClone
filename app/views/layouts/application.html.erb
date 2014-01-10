@@ -84,9 +84,33 @@
       WOOO!!!
     </div>
   </div>
+  <div style="display:none" class="site-demo">
+    <h2>Site Demo</h2>
+    <p>
+      You are logged in as a test user.  Explore the site on your own or
+      click
+      <a href="https://github.com/klockster/FinalProject" target="_blank">here</a>
+      for specific features to check out!<br>
+      <a href="#" class="light-box-link pseudo-button">OK</a>
+    </p>
+  </div>
   <script src="http://js.pusher.com/2.1/pusher.min.js"></script>
+  <script id="any-page-demo">
+  $(document).ready(function(){
+    if (<%= !!flash[:light_box] %>){
+      var $body = $("body");
+      $body.on("click","a.light-box-link",function(event){
+        event.preventDefault();
+        $(".dark-overlay").remove();
+        $(".light-box").remove();
+      })
+      $body.append("<div class='dark-overlay'></div>");
+      $body.append("<div class='light-box'></div>");
+      $(".light-box").append($(".site-demo").html());
+    }
+  });
+  </script>
   <script>
-
 
     $(document).ready(function(){
       var data = JSON.parse($("#bootstrapped_current_user_json").html());

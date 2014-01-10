@@ -104,6 +104,7 @@ class UsersController < ApplicationController
   def user_demo
     user = User.find_by_username("user1")
     self.current_user=(user)
+    flash[:light_box] = true
     redirect_to @_env["HTTP_REFERER"]
   end
 
