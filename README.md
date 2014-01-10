@@ -10,11 +10,13 @@ A clone of many of the features of the popular video game live-streaming social 
 * Recursion
 * Infinite Scroll
 * CSS Media Queries
+
 ## Features
 * Follows/Followings for users
 * Live video streaming
 * Many-user chat with custom emoticons
 * Customizable pages for each user
 * Nested comments on non-live videos
+
 ## Upcoming Features
 * Save/delete streamed videos
