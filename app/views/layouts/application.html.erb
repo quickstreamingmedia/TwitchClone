@@ -14,7 +14,7 @@
   <% follows = (!!current_user) ? current_user.get_follows : [] %>
     {
       "CURRENT_USER_ID": <%= (!!current_user) ? current_user.id.to_json.html_safe : 0 %>,
-      "FOLLOWS": <%= (!!current_user) ? follows.to_json.html_safe : [].to_json.html_safe %>,
+      "FOLLOWS": <%= (!!current_user) ? follows.to_json(except: [:password_digest]).html_safe : [].to_json.html_safe %>,
       "SORT_PRIORITY": <%= (!!current_user) ? current_user.get_follows_objects.to_json.html_safe : [] %>,
       "PAGES": <%= (!!current_user) ? follows.map{ |x| x.page }.to_json.html_safe : [] %>
     }
