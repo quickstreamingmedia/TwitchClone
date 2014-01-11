@@ -70,7 +70,10 @@ $(document).ready(function(){
   $(document).ready(function(){
     var rightSide = $(".temp-container").html();
     $(".2-wrapper").html(rightSide);
-    $(".right-sidebar-buttons-wrapper a.a-other").text("Info");
+    $("a.a-chat").remove();
+    $(".right-sidebar-buttons-wrapper a.a-other").text("Info").addClass("current-tab");
+    $(".1-wrapper").css("display","none");
+    $(".2-wrapper").css("display","block");
 
     $(".single-container").on("click", "button", function(event){
       event.preventDefault();

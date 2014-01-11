@@ -20,6 +20,8 @@ TwitchClone::Application.routes.draw do
 
   resource :session, only: [:new, :create, :destroy]
 
+  get "/featured", to: "static_pages#featured", as: "featured"
+
   post "/chat", to: "chats#chat", as: "chat"
   post "/chat_silence", to: "chats#silence", as: "silence"
   post "/chat_watch", to: "chats#start_watching", as: "watch"

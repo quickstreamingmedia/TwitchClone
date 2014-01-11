@@ -115,7 +115,14 @@ $(document).ready(function(){
 
   var rightSide = $(".temp-container").html();
   $(".2-wrapper").html(rightSide);
-  $(".right-sidebar-buttons-wrapper a.a-other").text("Videos");
+  $("a.a-chat").remove();
+  $(".right-sidebar-buttons-wrapper a.a-other").text("Videos").addClass("current-tab");
+  $(".1-wrapper").css("display","none");
+  $(".2-wrapper").css("display","block");
+
+
+
+
 
   //get some bootstrapped data!!
   var data = JSON.parse($("#bootstrapped_comments").html());

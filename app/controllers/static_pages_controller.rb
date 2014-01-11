@@ -6,6 +6,10 @@ class StaticPagesController < ApplicationController
     #to revert just copy from def logged_in? starting at if !!params... to its end
   end
 
+  def featured
+
+  end
+
   def not_found
     render :no
   end

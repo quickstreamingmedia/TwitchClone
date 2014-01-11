@@ -197,6 +197,9 @@ function scaleVideos() {
     var modsData = JSON.parse($("#bootstrapped_mods").html());
     var modsArrayIds = modsData["MODERATORS"];
 
+    $(".right-sidebar-buttons-wrapper a.a-other").remove();
+    // $(".current-tab").css("margin-left","52px");
+
     var tFun = function(event) {
       if (event.which == 13) {
         chatText(event);
