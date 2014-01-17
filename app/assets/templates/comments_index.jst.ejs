@@ -28,7 +28,7 @@
         <div class="comment-info">
           <b><%= comment.get("username") + ": " %></b>
           <a href="#" class="reply">(reply)</a>
-          <% if(moderators.indexOf(CURRENT_USER_ID) >= 0 ) { %>
+          <% if(moderators.indexOf(CURRENT_USER_ID) >= 0 || CURRENT_USER_ID == comment.escape("user_id")) { %>
             <% if (comment.escape("body") != "[deleted]" && (CURRENT_USER_ID == videoOwnerId || comment.escape("user_id") == CURRENT_USER_ID || (comment.escape("user_id") != videoOwnerId && moderators.indexOf(comment.escape("user_id")*1) < 0) )){ %>
               <a href="#" class="deleteComment">(delete)</a>
             <% } %>

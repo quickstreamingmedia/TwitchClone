@@ -103,7 +103,7 @@ $(document).ready(function(){
 </script>
 <script type="application/json" id="bootstrapped_comments">
 {<% comments = @video.comments %>
-  "COMMENTS": <%= comments.to_json.html_safe %>,
+  "COMMENTS": <%= j comments.to_json.html_safe %>,
   "COMMENTS_BY_PARENT_ID": <%= @video.comments_by_parent_id.to_json.html_safe %>,
   "PAGES": <%= comments.map{ |x| Page.find_by_user_id(x.user_id).logo_url}.to_json.html_safe %>,
   "USERS": <%= comments.map{ |x| User.find(x.user_id).username }.to_json.html_safe %>,
