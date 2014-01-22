@@ -12,9 +12,7 @@
       <div class="single-container">
         Link to image:<input type="text" name="container[<%= i %>][image_url]" value="<%= container.image_url %>"><br>
         Image links to:<input type="text" name="container[<%= i %>][image_url_link]" value="<%= container.image_url_link %>"><br>
-        Body: <br><textarea name="container[<%= i %>][body]" style="width: 300px; height: 150px; max-width:395px">
-          <%= container.body %>
-        </textarea><br>
+        Body: <br><textarea name="container[<%= i %>][body]" style="width: 300px; height: 150px; max-width:395px"><%= container.body %></textarea><br>
         <button class="remove-container" data-id="<%= container.id %>">Remove!</button><br><hr>
       </div>
     <% end %>
